@@ -27,7 +27,7 @@
       <button class="logout__button" @click="logout">ログアウト</button>
       <p>{{ $store.state.user_id }}</p>
     </div>
-    <div class="shop__item" v-for="(shop, index) in filteredShops" :key="index">
+    <div class="shop__item" v-for="shop in filteredShops" :key="shop.id">
       <img class="shop__image-small" :src="shop.image">
       <div class="info">
         <h3>{{ shop.shopname }}</h3>
@@ -36,7 +36,7 @@
       </div>
       <div class="shop__action">
         <button class="btn__detail" @click="shop_ditail(shop.id)">詳しく見る</button>
-        <fa v-if="isActive(index)" @click="changeLike(shop.id)" icon="heart" size="2x" class="like"/>
+        <fa v-if="isActive(shop.id)" @click="changeLike(shop.id)" icon="heart" size="2x" class="like"/>
         <fa v-else @click="changeLike(shop.id)" icon="heart" size="2x" class="base"/>
       </div>
     </div>
@@ -78,10 +78,10 @@ export default {
         })
       })
     },
-    isActive(index) {
+    isActive(id) {
       // ハートマーク色選択
       const isLike = this.likes.some(value => {
-        return value.shop_id === this.shops[index].id
+        return value.shop_id === id
       });
       if(isLike) {
         return true;
