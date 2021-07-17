@@ -103,11 +103,6 @@ export default {
     font-weight: bold;
     margin: 0;
   }
-  /* span {
-    font-size: 8px;
-    font-weight: bold;
-    border: none;
-  } */
   .shop__action {
     display: flex;
     justify-content: space-between;

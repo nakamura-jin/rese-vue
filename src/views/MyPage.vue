@@ -57,7 +57,6 @@ export default {
     position: relative;
     display: flex;
     justify-content: center;
-    /* margin-bottom: 30px; */
   }
 
   .guest__name {
