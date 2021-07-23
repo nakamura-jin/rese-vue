@@ -4,12 +4,16 @@
       <!-- 検索 -->
       <div class="search">
         <div>
+          <!-- エリア -->
           <select name="area" class="select__area" v-model="area">
             <option value="">all area</option>
             <option>東京</option>
             <option>大阪</option>
             <option>福岡</option>
-          </select><span></span>
+          </select>
+          <!-- ここまでエリア -->
+
+          <!-- ジャンル -->
           <select name="genre" class="select__genre" v-model="genre">
             <option value="">all genre</option>
             <option>寿司</option>
@@ -18,11 +22,15 @@
             <option>イタリアン</option>
             <option>ラーメン</option>
           </select>
+          <!-- ここまでジャンル -->
+
+          <!-- 文字検索 -->
           <fa icon="search" class="search-icon" />
           <input name="word" type="text" class="search-bar" placeholder="Search ..." v-model="word">
         </div>
       </div>
       <!-- ここまで -->
+
       <button class="mypage-link__button" @click="mypage">マイページへ</button>
       <button class="logout__button" @click="logout">ログアウト</button>
       <p>{{ $store.state.user_id }}</p>
@@ -31,6 +39,101 @@
       <img class="shop__image-small" :src="shop.image">
       <div class="info">
         <h3>{{ shop.shopname }}</h3>
+
+      <!-- 店舗評価 -->
+        <div class="star">
+          <!-- 0 〜 0.4 -->
+          <template v-if="total(shop) < 0.5">
+            <fa icon="star" class="star__base"/>
+            <fa icon="star" class="star__base"/>
+            <fa icon="star" class="star__base"/>
+            <fa icon="star" class="star__base"/>
+            <fa icon="star" class="star__base"/>
+          </template>
+          <!-- 0.5 〜 1 -->
+          <template v-if="0.5 <= total(shop) && total(shop) < 1">
+            <fa icon="star-half-alt" class="star__color"/>
+            <fa icon="star" class="star__base"/>
+            <fa icon="star" class="star__base"/>
+            <fa icon="star" class="star__base"/>
+            <fa icon="star" class="star__base"/>
+          </template>
+          <!-- 1 〜 1.4 -->
+          <template v-if="1 <= total(shop) && total(shop) < 1.5">
+            <fa icon="star" class="star__color" />
+            <fa icon="star" class="star__base"/>
+            <fa icon="star" class="star__base"/>
+            <fa icon="star" class="star__base"/>
+            <fa icon="star" class="star__base"/>
+          </template>
+          <!-- 1.5 〜 2 -->
+          <template v-if="1.5 <= total(shop) && total(shop) < 2">
+            <fa icon="star" class="star__color" />
+            <fa icon="star-half-alt" class="star__color"/>
+            <fa icon="star" class="star__base"/>
+            <fa icon="star" class="star__base"/>
+            <fa icon="star" class="star__base"/>
+          </template>
+          <!-- 2 〜 2.4 -->
+          <template v-if="2 <= total(shop) && total(shop) < 2.5">
+            <fa icon="star" class="star__color" />
+            <fa icon="star" class="star__color" />
+            <fa icon="star" class="star__base"/>
+            <fa icon="star" class="star__base"/>
+            <fa icon="star" class="star__base"/>
+          </template>
+          <!-- 2.5 〜 3 -->
+          <template  v-if="2.5 <= total(shop) && total(shop) < 3">
+            <fa icon="star" class="star__color" />
+            <fa icon="star" class="star__color" />
+            <fa icon="star-half-alt" class="star__color"/>
+            <fa icon="star" class="star__base"/>
+            <fa icon="star" class="star__base"/>
+          </template>
+          <!-- 3 〜 3.4 -->
+          <template v-if="3 <= total(shop) && total(shop) < 3.5">
+            <fa icon="star" class="star__color" />
+            <fa icon="star" class="star__color" />
+            <fa icon="star" class="star__color" />
+            <fa icon="star" class="star__base"/>
+            <fa icon="star" class="star__base"/>
+          </template>
+          <!-- 3.5 〜 4 -->
+          <template v-if="3.5 <= total(shop) && total(shop) < 4">
+            <fa icon="star" class="star__color" />
+            <fa icon="star" class="star__color" />
+            <fa icon="star" class="star__color" />
+            <fa icon="star-half-alt" class="star__color"/>
+            <fa icon="star" class="star__base"/>
+          </template>
+          <!-- 4 〜 4.4 -->
+          <template v-if="4 <= total(shop) && total(shop) < 4.5">
+            <fa icon="star" class="star__color" />
+            <fa icon="star" class="star__color" />
+            <fa icon="star" class="star__color" />
+            <fa icon="star" class="star__color" />
+            <fa icon="star" class="star__base"/>
+          </template>
+          <!-- 4.5 〜 4.9 -->
+          <template v-if="4.5 <= total(shop) && total(shop) < 5">
+            <fa icon="star" class="star__color" />
+            <fa icon="star" class="star__color" />
+            <fa icon="star" class="star__color" />
+            <fa icon="star" class="star__color" />
+            <fa icon="star-half-alt" class="star__color"/>
+          </template>
+          <!-- 5 -->
+          <template v-if="total(shop) == 5">
+            <fa icon="star" class="star__color" />
+            <fa icon="star" class="star__color" />
+            <fa icon="star" class="star__color" />
+            <fa icon="star" class="star__color" />
+            <fa icon="star" class="star__color" />
+          </template>
+          <span class="review" type="decimal">{{ total(shop).toFixed(1) }}</span>
+        </div>
+      <!-- 店舗評価ここまで -->
+
         <span class="shop__area">＃{{ shop.area_name }}</span>
         <span class="shop__genre">＃{{ shop.genre_name }}</span>
       </div>
@@ -48,7 +151,6 @@ import axios from 'axios'
 import firebase from 'firebase'
 
 export default {
-  name: 'ShopList',
   data() {
     return {
       shops: [],
@@ -57,7 +159,7 @@ export default {
       // お店検索
       area: '',
       genre: '',
-      word: ''
+      word: '',
     }
   },
   methods: {
@@ -132,6 +234,21 @@ export default {
       .then(() => {
         this.$router.push('/login')
       })
+    },
+
+    total(shop){
+      // 店舗評価値
+      const makeReview = shop.review
+      let sum = 0;
+      for(let i = 0; i < makeReview.length; i++) {
+        sum += makeReview[i].star
+      }
+      if(makeReview == '') {
+        return 0
+      } else {
+        console.log(sum)
+        return parseFloat(sum) / makeReview.length
+      }
     }
   },
   computed: {
@@ -153,7 +270,7 @@ export default {
         return shopsArray;
       }
       return this.shops;
-    }
+    },
   },
   created() {
     this.getShop();
@@ -200,7 +317,7 @@ export default {
   .shop__item {
     margin: 20px 10px;
     width: 23%;
-    height: 280px;
+    height: 300px;
     background: white;
     border-radius: 8px;
     box-shadow: 4px 4px 4px rgba(0,0,0,0.4);
@@ -249,10 +366,7 @@ export default {
     font-size: 16px;
     border: none;
   }
-  span {
-    margin: 0 10px;
-    border: 1px solid #eee;
-  }
+
   .search-bar {
     width: 280px;
     height: 20px;
@@ -262,5 +376,20 @@ export default {
     margin-left: 10px;
     margin-right: 6px;
     color: gray;
+  }
+
+
+  /* 店舗評価 */
+
+  .review {
+    margin-left: 10px;
+  }
+
+  .star__base {
+    display: inline;
+    color: #ddd;
+  }
+  .star__color {
+    color: goldenrod;
   }
 </style>

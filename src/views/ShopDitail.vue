@@ -4,7 +4,105 @@
       <div class="shop-name">
         <button class="back" @click="back">&lt;</button>
         <h2>{{ setShop.shopname }}</h2>
+
+        <!-- 店舗評価 -->
+          <div class="star__shop-ditail">
+            <!-- 0 〜 0.4 -->
+            <template v-if="total(setShop) < 0.5">
+              <fa icon="star" class="star__base"/>
+              <fa icon="star" class="star__base"/>
+              <fa icon="star" class="star__base"/>
+              <fa icon="star" class="star__base"/>
+              <fa icon="star" class="star__base"/>
+            </template>
+            <!-- 0.5 〜 1 -->
+            <template v-if="0.5 <= total(setShop) && total(setShop) < 1">
+              <fa icon="star-half-alt" class="star__color"/>
+              <fa icon="star" class="star__base"/>
+              <fa icon="star" class="star__base"/>
+              <fa icon="star" class="star__base"/>
+              <fa icon="star" class="star__base"/>
+            </template>
+            <!-- 1 〜 1.4 -->
+            <template v-if="1 <= total(setShop) && total(setShop) < 1.5">
+              <fa icon="star" class="star__color" />
+              <fa icon="star" class="star__base"/>
+              <fa icon="star" class="star__base"/>
+              <fa icon="star" class="star__base"/>
+              <fa icon="star" class="star__base"/>
+            </template>
+            <!-- 1.5 〜 2 -->
+            <template v-if="1.5 <= total(setShop) && total(setShop) < 2">
+              <fa icon="star" class="star__color" />
+              <fa icon="star-half-alt" class="star__color"/>
+              <fa icon="star" class="star__base"/>
+              <fa icon="star" class="star__base"/>
+              <fa icon="star" class="star__base"/>
+            </template>
+            <!-- 2 〜 2.4 -->
+            <template v-if="2 <= total(setShop) && total(setShop) < 2.5">
+              <fa icon="star" class="star__color" />
+              <fa icon="star" class="star__color" />
+              <fa icon="star" class="star__base"/>
+              <fa icon="star" class="star__base"/>
+              <fa icon="star" class="star__base"/>
+            </template>
+            <!-- 2.5 〜 3 -->
+            <template  v-if="2.5 <= total(setShop) && total(setShop) < 3">
+              <fa icon="star" class="star__color" />
+              <fa icon="star" class="star__color" />
+              <fa icon="star-half-alt" class="star__color"/>
+              <fa icon="star" class="star__base"/>
+              <fa icon="star" class="star__base"/>
+            </template>
+            <!-- 3 〜 3.4 -->
+            <template v-if="3 <= total(setShop) && total(setShop) < 3.5">
+              <fa icon="star" class="star__color" />
+              <fa icon="star" class="star__color" />
+              <fa icon="star" class="star__color" />
+              <fa icon="star" class="star__base"/>
+              <fa icon="star" class="star__base"/>
+            </template>
+            <!-- 3.5 〜 4 -->
+            <template v-if="3.5 <= total(setShop) && total(setShop) < 4">
+              <fa icon="star" class="star__color" />
+              <fa icon="star" class="star__color" />
+              <fa icon="star" class="star__color" />
+              <fa icon="star-half-alt" class="star__color"/>
+              <fa icon="star" class="star__base"/>
+            </template>
+            <!-- 4 〜 4.4 -->
+            <template v-if="4 <= total(setShop) && total(setShop) < 4.5">
+              <fa icon="star" class="star__color" />
+              <fa icon="star" class="star__color" />
+              <fa icon="star" class="star__color" />
+              <fa icon="star" class="star__color" />
+              <fa icon="star" class="star__base"/>
+            </template>
+            <!-- 4.5 〜 4.9 -->
+            <template v-if="4.5 <= total(setShop) && total(setShop) < 5">
+              <fa icon="star" class="star__color" />
+              <fa icon="star" class="star__color" />
+              <fa icon="star" class="star__color" />
+              <fa icon="star" class="star__color" />
+              <fa icon="star-half-alt" class="star__color"/>
+            </template>
+            <!-- 5 -->
+            <template v-if="total(setShop) == 5">
+              <fa icon="star" class="star__color" />
+              <fa icon="star" class="star__color" />
+              <fa icon="star" class="star__color" />
+              <fa icon="star" class="star__color" />
+              <fa icon="star" class="star__color" />
+            </template>
+            <!-- 評価値 -->
+            <span class="review">{{ total(setShop).toFixed(1) }}</span>
+          </div>
+        <!-- 店舗評価ここまで -->
+
+        <button class="rating" v-if="isPush == false" @click="openModal(setShop)">評価する</button>
       </div>
+
       <img class="shop__image-big" :src="setShop.image" alt="店舗画像">
       <div class="category">
         <span class="area">#{{ setShop.area_name }}</span>
@@ -20,7 +118,7 @@
       <div class="board__inner">
         <h2>予約</h2>
         <!-- 日付  -->
-        <input type="date" class="date" v-model="date">
+          <input type="date" class="date" v-model="date">
         <!-- 時間  -->
         <select type="time" class="time" v-model="time">
           <option>10:00</option>
@@ -72,28 +170,73 @@
       </div>
       <button class="decision" @click="reservation">予約する</button>
     </div>
+    <!-- ここまで予約表 -->
+
+    <!-- モーダル -->
+    <div class="modal" :class="{ toggle: modalDisplay }">
+      <div class="container">
+        <div class="modal__inner">
+          <p v-if="rated">評価登録しました</p>
+
+          <!-- 評価する星 -->
+          <star-rating
+                v-bind:increment="0.5"
+                v-bind:max-rating="5"
+                inactive-color="#ddd"
+                active-color="goldenrod"
+                v-bind:star-size="50"
+                v-model="star">
+          </star-rating>
+
+          <div class="modal__button">
+            <!-- 評価済みかどうかで表示を変える -->
+            <button class="modal__rating" v-if="isPush == true" :disabled="isPush" @click="myRating">評価済みです</button>
+            <button class="modal__rating" v-else :disabled="isPush" @click="myRating">評価する</button>
+            <!-- モーダル閉じる -->
+            <button class="modal__close" @click="closeModal">閉じる</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ここまでモーダル -->
+
   </div>
 </template>
 
 <script>
-import axios from 'axios';
+import axios from 'axios'
 import firebase from 'firebase'
+import StarRating from 'vue-star-rating'
+
 export default {
   name: 'ShopDitail',
+  components: {
+    StarRating,
+  },
   data() {
     return {
       shop_id: this.$route.query.id,
+      logUser: '',
       setShop: [],
       shopData: [],
       date: '',
       time: '10:00',
       people: 1,
+
+      // モーダル内
+      star: '',
+      modalDisplay: true,
+      rated: false,
+      isPush: false
     }
   },
   methods: {
+    // 前のページに戻る
     back() {
       this.$router.push('/');
     },
+
+    // 予約登録する
     reservation() {
       firebase
       .auth()
@@ -106,8 +249,59 @@ export default {
           people: this.people
         };
         axios.post('http://127.0.0.1:8000/api/v1/shops/' + this.shop_id + '/reservation', reservationData)
+        console.log(reservationData)
         this.$router.push('/done')
       })
+    },
+
+    // 店舗評価値
+    total(setShop){
+      const makeReview = setShop.review
+      let sum = 0;
+      for(let i = 0; i < makeReview.length; i++) {
+        sum += makeReview[i].star
+      }
+      if(makeReview == '') {
+        return 0
+      } else {
+        return parseFloat(sum) / makeReview.length
+      }
+    },
+
+    // 評価する
+    myRating() {
+      firebase
+      .auth()
+      .onAuthStateChanged((user) => {
+        const sendRating = {
+          user_id: user.uid,
+          shop_id: this.shop_id,
+          star: this.star
+        };
+        axios.post('http://127.0.0.1:8000/api/v1/shops/' + this.shop_id + '/review', sendRating)
+        console.log(sendRating)
+        this.rated = !this.rated
+        this.isPush = !this.isPush
+      })
+    },
+
+    // モーダル出す 評価済みかどうかの確認も行う
+    openModal(setShop){
+      this.modalDisplay = !this.modalDisplay
+      firebase
+      .auth()
+      .onAuthStateChanged((user) => {
+        var checkRated = JSON.parse(JSON.stringify(setShop.review))
+        for(let i = 0; i < checkRated.length; i++) {
+          if(checkRated[i].user_id == user.uid) {
+            this.isPush = !this.isPush
+          }
+        }
+      })
+    },
+    // モーダル閉じる
+    closeModal(){
+      this.modalDisplay = true
     }
   },
   mounted() {
@@ -117,6 +311,9 @@ export default {
       this.setShop = response.data.data
     })
     //
+  },
+  created() {
+    this.total();
   }
 }
 </script>
@@ -230,5 +427,74 @@ button {
   font-weight: bold;
   font-size: 16px;
   color: white;
+}
+
+/* 店舗評価 */
+
+.star__shop-ditail {
+  margin-left: 40px;
+  font-size: 20px;
+  margin-top: 4px;
+}
+
+.rating {
+  margin-left: 20px;
+  padding: 0 10px;
+  background: goldenrod;
+  border: none;
+  border-radius: 4px;
+}
+
+
+/* モーダル */
+
+.modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.8);
+  z-index: 1;
+}
+
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40%;
+  height: 40%;
+  background: white;
+  border-radius: 4px;
+}
+
+.modal__inner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.vue-star-rating-rating-text {
+  color: goldenrod;
+  font-size: 30px;
+}
+
+.modal__button {
+  margin-top: 40px;
+}
+
+.modal__rating, .modal__close {
+  display: flex;
+  margin: 20px auto;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  background: goldenrod;
+}
+
+.toggle {
+  display: none;
 }
 </style>

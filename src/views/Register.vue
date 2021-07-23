@@ -4,18 +4,33 @@
       <p>Register</p>
     </div>
     <div action="" class="new-user">
+    <!-- 名前登録 バリデーション -->
       <div class="name">
         <fa icon="user" class="register__icon"/>
-        <input type="text" name="name" v-model="Name" placeholder="Username" />
+        <validation-provider v-slot="{ errors }" rules="required">
+          <input type="text" name="name" v-model="Name" placeholder="Username" />
+          <span class="error">{{ errors[0] }}</span>
+        </validation-provider>
       </div>
+
+      <!-- メールアドレス登録 バリデーション -->
       <div class="mail">
         <fa icon="envelope" class="register__icon"/>
-        <input type="email" name="email" v-model="Email" placeholder="Email" />
+        <validation-provider v-slot="{ errors }" rules="required|email">
+          <input type="email" name="email" v-model="Email" placeholder="Email" />
+          <span class="error">{{ errors[0] }}</span>
+        </validation-provider>
       </div>
+
+      <!-- パスワード登録 バリデーション -->
       <div class="password">
         <fa icon="lock" class="register__icon"/>
-        <input type="password" name="password" v-model="Password" placeholder="Password" />
+        <validation-provider v-slot="{ errors }" rules="required">
+          <input type="password" name="password" v-model="Password" placeholder="Password" />
+          <span class="error">{{ errors[0] }}</span>
+        </validation-provider>
       </div>
+
       <button class="btn__register" @click="register">登録</button>
     </div>
   </div>
@@ -139,6 +154,11 @@ export default {
     background: blue;
     font-weight: bold;
     color: white;
+  }
+
+  /* バリデーション */
+  .error {
+    color: red;
   }
 </style>
 

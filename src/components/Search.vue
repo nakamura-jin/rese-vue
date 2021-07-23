@@ -6,7 +6,7 @@
         <option>東京</option>
         <option>大阪</option>
         <option>福岡</option>
-      </select><span></span>
+      </select>
       <select name="genle" class="select__genre" v-model="genre">
         <option>all genre</option>
         <option>寿司</option>
@@ -51,7 +51,7 @@ export default {
     font-size: 16px;
     border: none;
   }
-  span {
+  .select__genre {
     margin: 0 10px;
     border: 1px solid #eee;
   }
