@@ -45,6 +45,7 @@ export default {
     background: blue;
     font-weight: bold;
     color: white;
+    cursor: pointer;
   }
 
 

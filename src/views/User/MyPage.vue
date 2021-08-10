@@ -73,6 +73,7 @@ export default {
     border-radius: 8px;
     color: white;
     font-weight: bold;
+    cursor: pointer;
   }
 
 </style>

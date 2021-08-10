@@ -1,38 +1,41 @@
 <template>
-  <div class="register-form">
-    <div class="box-title">
-      <p>Register</p>
+  <div class="register">
+    <div class="register-form">
+      <div class="box-title">
+        <p>Register</p>
+      </div>
+      <div class="new-user">
+      <!-- 名前登録 バリデーション -->
+        <div class="name">
+          <fa icon="user" class="register__icon"/>
+          <validation-provider v-slot="{ errors }" rules="required">
+            <input type="text" name="name" v-model="Name" placeholder="UserName" />
+            <div class="error__register">{{ errors[0] }}</div>
+          </validation-provider>
+        </div>
+
+        <!-- メールアドレス登録 バリデーション -->
+        <div class="mail">
+          <fa icon="envelope" class="register__icon"/>
+          <validation-provider v-slot="{ errors }" rules="required|email">
+            <input type="email" name="email" v-model="Email" placeholder="Email" />
+            <div class="error__register">{{ errors[0] }}</div>
+          </validation-provider>
+        </div>
+
+        <!-- パスワード登録 バリデーション -->
+        <div class="password">
+          <fa icon="lock" class="register__icon"/>
+          <validation-provider v-slot="{ errors }" rules="required">
+            <input type="password" name="password" v-model="Password" placeholder="Password" />
+            <div class="error">{{ errors[0] }}</div>
+          </validation-provider>
+        </div>
+
+        <button class="btn__register" @click="register">登録</button>
+      </div>
     </div>
-    <div action="" class="new-user">
-    <!-- 名前登録 バリデーション -->
-      <div class="name">
-        <fa icon="user" class="register__icon"/>
-        <validation-provider v-slot="{ errors }" rules="required">
-          <input type="text" name="name" v-model="Name" placeholder="Username" />
-          <span class="error">{{ errors[0] }}</span>
-        </validation-provider>
-      </div>
-
-      <!-- メールアドレス登録 バリデーション -->
-      <div class="mail">
-        <fa icon="envelope" class="register__icon"/>
-        <validation-provider v-slot="{ errors }" rules="required|email">
-          <input type="email" name="email" v-model="Email" placeholder="Email" />
-          <span class="error">{{ errors[0] }}</span>
-        </validation-provider>
-      </div>
-
-      <!-- パスワード登録 バリデーション -->
-      <div class="password">
-        <fa icon="lock" class="register__icon"/>
-        <validation-provider v-slot="{ errors }" rules="required">
-          <input type="password" name="password" v-model="Password" placeholder="Password" />
-          <span class="error">{{ errors[0] }}</span>
-        </validation-provider>
-      </div>
-
-      <button class="btn__register" @click="register">登録</button>
-    </div>
+    <p>登録がお済みの場合は<span @click="loginPage" class="transition__login">ログイン</span>へ</p>
   </div>
 </template>
 
@@ -89,19 +92,25 @@ export default {
           }
         });
     },
+    loginPage() {
+      this.$router.push('login')
+    }
   }
 }
 </script>
 
 
 <style>
-  .register-form {
+  .register {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 400px;
-    height: 260px;
+    /* width: 30%; */
+  }
+
+  .register-form {
+    width: 100%;
     background: white;
     border: 1px solid white;
     border-radius: 8px;
@@ -123,7 +132,7 @@ export default {
     color: white;
   }
   .new-user {
-    margin: 20px;
+    margin: 30px 20px;
   }
   .new-user input {
     width: 300px;
@@ -146,19 +155,26 @@ export default {
     margin-bottom: 20px;
   }
   .btn__register {
-    position: absolute;
-    right: 10px;
+    display: block;
+    margin-left: auto;
     border: none;
     padding: 6px 10px;
     border-radius: 8px;
     background: blue;
     font-weight: bold;
     color: white;
+    cursor: pointer;
+  }
+
+  .transition__login {
+    color: blue;
+    cursor: pointer;
   }
 
   /* バリデーション */
-  .error {
+  .error__register {
     color: red;
+    box-sizing: border-box;
   }
 </style>
 

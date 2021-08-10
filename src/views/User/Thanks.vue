@@ -8,10 +8,21 @@
 <script>
 export default {
   name: 'ThanksPop',
+  // data() {
+  //   return {
+  //     comeRoute: ''
+  //   }
+  // },
   methods: {
     go_to_login() {
       this.$router.push('/login');
+    },
+    comeRoute () {
+      console.log(this.$router)
     }
+  },
+  created() {
+    this.comeRoute()
   }
 }
 </script>
@@ -45,6 +56,7 @@ export default {
     background: blue;
     font-weight: bold;
     color: white;
+    cursor: pointer;
   }
 
 

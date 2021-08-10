@@ -7,10 +7,12 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import axios from 'axios'
 import firebase from 'firebase'
+import 'firebase/storage'
 import StarRating from 'vue-star-rating'
 import { ValidationProvider, ValidationObserver, extend, localize } from 'vee-validate';
 import * as originalRules from 'vee-validate/dist/rules';
 import ja from 'vee-validate/dist/locale/ja.json';
+
 
 
 // axios

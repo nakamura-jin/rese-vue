@@ -1,12 +1,28 @@
 <template>
   <div id="app">
-    <div id="logo">
+    <div id="logo" @click="SiteHome">
     <fa icon="poll-h" class="icon" size="3x" />
     <h1>Rese</h1>
   </div>
     <router-view/>
   </div>
 </template>
+
+<script>
+import firebase from 'firebase'
+export default {
+  methods: {
+    SiteHome() {
+      firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        this.$router.push('/rese')
+      })
+    }
+  }
+}
+</script>
 
 <style>
 body {
@@ -20,13 +36,13 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  /* margin: 0 60px; */
 }
 
 #logo {
   display: flex;
   margin-top: 30px;
   color: blue;
+  cursor: pointer;
 }
 
 #logo h1 {

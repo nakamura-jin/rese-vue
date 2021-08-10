@@ -1,19 +1,28 @@
 <template>
-  <div class="login-form">
-    <div class="box-title">
-      <p>Login</p>
-    </div>
-    <div class="user_data">
-      <div class="mail">
-        <fa icon="envelope" class="login__icon"/>
-        <input type="email" name="email" v-model="Email" placeholder="Email">
+  <div class="login">
+    <div class="login-form">
+      <div class="form-header">
+        <p>Login</p>
       </div>
-      <div class="password">
-        <fa icon="lock" class="login__icon"/>
-        <input type="password" name="password" v-model="Password" placeholder="Password">
+      <div class="user_data">
+        <div class="mail">
+          <fa icon="envelope" class="login__icon"/>
+          <validation-provider v-slot="{ errors }" rules="required|email">
+            <input type="email" name="email" v-model="Email" placeholder="Email">
+            <div class="error__login">{{ errors[0] }}</div>
+          </validation-provider>
+        </div>
+        <div class="password">
+          <fa icon="lock" class="login__icon"/>
+          <validation-provider v-slot="{ errors }" rules="required">
+            <input type="password" name="password" v-model="Password" placeholder="Password">
+            <div class="error__login">{{ errors[0] }}</div>
+          </validation-provider>
+        </div>
+        <button class="btn__login" @click="login">ログイン</button>
       </div>
-      <button class="btn__login" @click="login">ログイン</button>
     </div>
+    <p>会員登録は<span @click="registerPage" class="transition__register">こちら</span></p>
   </div>
 </template>
 
@@ -27,6 +36,9 @@ export default {
       Email: '',
       Password: '',
       resUser: [],
+      select: 'user',
+      userColor: true,
+      shopColor:false,
     }
   },
   methods: {
@@ -67,31 +79,38 @@ export default {
           }
         });
     },
+    registerPage(){
+      this.$router.push('/register')
+    }
   }
 }
 </script>
 
 
 <style>
-  .login-form {
+  .login {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 400px;
-    height: 220px;
+    width: 28%;
+  }
+
+  .login-form {
+    width: 100%;
     background: white;
     border: 1px solid white;
     border-radius: 8px;
     box-shadow: 4px 4px 4px rgba(0,0,0,0.4);
   }
 
-  .box-title {
+  .form-header {
     height: 60px;
     border-radius: 8px 8px 0 0 ;
     background: blue;
   }
-  .box-title p {
+
+  .form-header p {
     margin: 0;
     text-align: left;
     padding-left: 20px;
@@ -100,8 +119,9 @@ export default {
     font-weight: bold;
     color: white;
   }
+
   .user_data {
-    margin: 20px;
+    margin: 30px 20px;
   }
   .user_data input {
     width: 300px;
@@ -124,13 +144,23 @@ export default {
     margin-bottom: 20px;
   }
   .btn__login {
-    position: absolute;
-    right: 10px;
+    display: block;
+    margin-left: auto;
     border: none;
     padding: 6px 10px;
     border-radius: 8px;
     background: blue;
     font-weight: bold;
     color: white;
+    cursor: pointer;
+  }
+
+  .transition__register {
+    color: blue;
+    cursor: pointer;
+  }
+
+  .error__login {
+    color: red;
   }
 </style>

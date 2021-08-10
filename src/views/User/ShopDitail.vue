@@ -7,16 +7,16 @@
 
         <!-- 店舗評価 -->
           <div class="star__shop-ditail">
-            <!-- 0 〜 0.4 -->
-            <template v-if="total(setShop) < 0.5">
+            <!-- 0  -->
+            <template v-if="0 <= setHasReview && setHasReview < 0.5">
               <fa icon="star" class="star__base"/>
               <fa icon="star" class="star__base"/>
               <fa icon="star" class="star__base"/>
               <fa icon="star" class="star__base"/>
               <fa icon="star" class="star__base"/>
             </template>
-            <!-- 0.5 〜 1 -->
-            <template v-if="0.5 <= total(setShop) && total(setShop) < 1">
+            <!-- 0.1 〜 1 -->
+            <template v-if="0.5 <= setHasReview && setHasReview < 1">
               <fa icon="star-half-alt" class="star__color"/>
               <fa icon="star" class="star__base"/>
               <fa icon="star" class="star__base"/>
@@ -24,7 +24,7 @@
               <fa icon="star" class="star__base"/>
             </template>
             <!-- 1 〜 1.4 -->
-            <template v-if="1 <= total(setShop) && total(setShop) < 1.5">
+            <template v-if="1.1 <= setHasReview && setHasReview < 1.5">
               <fa icon="star" class="star__color" />
               <fa icon="star" class="star__base"/>
               <fa icon="star" class="star__base"/>
@@ -32,7 +32,7 @@
               <fa icon="star" class="star__base"/>
             </template>
             <!-- 1.5 〜 2 -->
-            <template v-if="1.5 <= total(setShop) && total(setShop) < 2">
+            <template v-if="1.5 <= setHasReview && setHasReview < 2">
               <fa icon="star" class="star__color" />
               <fa icon="star-half-alt" class="star__color"/>
               <fa icon="star" class="star__base"/>
@@ -40,7 +40,7 @@
               <fa icon="star" class="star__base"/>
             </template>
             <!-- 2 〜 2.4 -->
-            <template v-if="2 <= total(setShop) && total(setShop) < 2.5">
+            <template v-if="2 <= setHasReview && setHasReview < 2.5">
               <fa icon="star" class="star__color" />
               <fa icon="star" class="star__color" />
               <fa icon="star" class="star__base"/>
@@ -48,7 +48,7 @@
               <fa icon="star" class="star__base"/>
             </template>
             <!-- 2.5 〜 3 -->
-            <template  v-if="2.5 <= total(setShop) && total(setShop) < 3">
+            <template  v-if="2.5 <= setHasReview && setHasReview < 3">
               <fa icon="star" class="star__color" />
               <fa icon="star" class="star__color" />
               <fa icon="star-half-alt" class="star__color"/>
@@ -56,7 +56,7 @@
               <fa icon="star" class="star__base"/>
             </template>
             <!-- 3 〜 3.4 -->
-            <template v-if="3 <= total(setShop) && total(setShop) < 3.5">
+            <template v-if="3 <= setHasReview && setHasReview < 3.5">
               <fa icon="star" class="star__color" />
               <fa icon="star" class="star__color" />
               <fa icon="star" class="star__color" />
@@ -64,7 +64,7 @@
               <fa icon="star" class="star__base"/>
             </template>
             <!-- 3.5 〜 4 -->
-            <template v-if="3.5 <= total(setShop) && total(setShop) < 4">
+            <template v-if="3.5 <= setHasReview && setHasReview < 4">
               <fa icon="star" class="star__color" />
               <fa icon="star" class="star__color" />
               <fa icon="star" class="star__color" />
@@ -72,7 +72,7 @@
               <fa icon="star" class="star__base"/>
             </template>
             <!-- 4 〜 4.4 -->
-            <template v-if="4 <= total(setShop) && total(setShop) < 4.5">
+            <template v-if="4 <= setHasReview && setHasReview < 4.5">
               <fa icon="star" class="star__color" />
               <fa icon="star" class="star__color" />
               <fa icon="star" class="star__color" />
@@ -80,7 +80,7 @@
               <fa icon="star" class="star__base"/>
             </template>
             <!-- 4.5 〜 4.9 -->
-            <template v-if="4.5 <= total(setShop) && total(setShop) < 5">
+            <template v-if="4.5 <= setHasReview && setHasReview < 5">
               <fa icon="star" class="star__color" />
               <fa icon="star" class="star__color" />
               <fa icon="star" class="star__color" />
@@ -88,7 +88,7 @@
               <fa icon="star-half-alt" class="star__color"/>
             </template>
             <!-- 5 -->
-            <template v-if="total(setShop) == 5">
+            <template v-if="setHasReview == 5">
               <fa icon="star" class="star__color" />
               <fa icon="star" class="star__color" />
               <fa icon="star" class="star__color" />
@@ -96,7 +96,7 @@
               <fa icon="star" class="star__color" />
             </template>
             <!-- 評価値 -->
-            <span class="review">{{ total(setShop).toFixed(1) }}</span>
+            <span class="review">{{ setHasReview }}</span>
           </div>
         <!-- 店舗評価ここまで -->
 
@@ -118,9 +118,14 @@
       <div class="board__inner">
         <h2>予約</h2>
         <!-- 日付  -->
-          <input type="date" class="date" v-model="date">
+        <validation-provider v-slot="{ errors }" rules="required">
+          <input type="date" class="date" v-model="date" name="日にち">
+          <div class="error__reservation">{{ errors[0] }}</div>
+        </validation-provider>
+
         <!-- 時間  -->
-        <select type="time" class="time" v-model="time">
+        <validation-provider v-slot="{ errors }" rules="required">
+        <select type="time" class="time" v-model="time" name="時間">
           <option>10:00</option>
           <option>11:00</option>
           <option>12:00</option>
@@ -135,8 +140,11 @@
           <option>21:00</option>
           <option>22:00</option>
         </select>
+        <div class="error__reservation">{{ errors[0] }}</div>
+        </validation-provider>
         <!-- 人数  -->
-        <select class="people" v-model="people">
+        <validation-provider v-slot="{ errors }" rules="required">
+        <select class="people" v-model="people" name="人数">
           <option value="1">1名</option>
           <option value="2">2名</option>
           <option value="3">3名</option>
@@ -148,6 +156,8 @@
           <option value="9">9名</option>
           <option value="10">10名</option>
         </select>
+        <div class="error__reservation">{{ errors[0] }}</div>
+        </validation-provider>
 
         <table class="confirmation">
           <tr>
@@ -222,6 +232,8 @@ export default {
       date: '',
       time: '10:00',
       people: 1,
+      getReview: [],
+      setHasReview: '',
 
       // モーダル内
       star: '',
@@ -236,11 +248,33 @@ export default {
       this.$router.push('/');
     },
 
+    shopDotail() {
+    // ショップデータ取得
+    axios.get('http://127.0.0.1:8000/api/v1/shops/' + this.shop_id)
+    .then((response) => {
+      this.setShop = response.data.data
+    })
+    // レビュー表示
+    axios.get('http://127.0.0.1:8000/api/v1/shops/' + this.shop_id + '/reviews')
+      .then((response) => {
+        this.getReview = response.data.data
+        let sum = 0;
+        for(let i = 0; i < this.getReview.length; i++) {
+          sum += Number(this.getReview[i].star)
+        }
+        if(this.getReview.length == 0) {
+          this.setHasReview = 0
+        } else {
+          this.setHasReview = (sum / this.getReview.length).toFixed(1)
+        }
+      })
+    },
+
     // 予約登録する
     reservation() {
       firebase
       .auth()
-      .onAuthStateChanged((user) => {
+      .onAuthStateChanged(user => {
         const reservationData = {
           user_id: user.uid,
           shop_id: this.shop_id,
@@ -248,24 +282,9 @@ export default {
           time: this.time,
           people: this.people
         };
-        axios.post('http://127.0.0.1:8000/api/v1/shops/' + this.shop_id + '/reservation', reservationData)
-        console.log(reservationData)
+        axios.post('http://127.0.0.1:8000/api/v1/shops/' +this.shop_id + '/reservation', reservationData)
         this.$router.push('/done')
       })
-    },
-
-    // 店舗評価値
-    total(setShop){
-      const makeReview = setShop.review
-      let sum = 0;
-      for(let i = 0; i < makeReview.length; i++) {
-        sum += makeReview[i].star
-      }
-      if(makeReview == '') {
-        return 0
-      } else {
-        return parseFloat(sum) / makeReview.length
-      }
     },
 
     // 評価する
@@ -279,7 +298,6 @@ export default {
           star: this.star
         };
         axios.post('http://127.0.0.1:8000/api/v1/shops/' + this.shop_id + '/review', sendRating)
-        console.log(sendRating)
         this.rated = !this.rated
         this.isPush = !this.isPush
       })
@@ -302,18 +320,11 @@ export default {
     // モーダル閉じる
     closeModal(){
       this.modalDisplay = true
+      this.shopDotail()
     }
   },
-  mounted() {
-    // ショップデータ取得
-    axios.get('http://127.0.0.1:8000/api/v1/shops/' + this.shop_id)
-    .then((response) => {
-      this.setShop = response.data.data
-    })
-    //
-  },
   created() {
-    this.total();
+    this.shopDotail()
   }
 }
 </script>
@@ -443,6 +454,11 @@ button {
   background: goldenrod;
   border: none;
   border-radius: 4px;
+}
+
+.error__reservation {
+  color: white;
+  margin-bottom: 10px;
 }
 
 
