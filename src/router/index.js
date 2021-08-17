@@ -21,6 +21,7 @@ import OwnerPage from '../views/Owner/OwnerPage.vue'
 Vue.use(VueRouter)
 
 const routes = [
+
   {
     path: '/rese',
     name: 'SiteTop',

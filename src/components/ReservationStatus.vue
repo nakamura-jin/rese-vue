@@ -1,12 +1,23 @@
 <template>
   <div class="reservation-status">
-    <h2>予約状況</h2>
+    <h2 class="reservation-title">予約状況</h2>
     <div v-show="noReservation"><p class="no__reservation">予約はありません</p></div>
     <div class="status"  v-for="(reservation, index) in reservations" :key="reservation.id">
       <div class="status__item">
         <div class="status__title">
-          <fa icon="clock" class="clock" />
-          <p>予約</p>
+          <ul class="pc-mode__status__title__list">
+            <li><fa icon="clock" class="clock" /></li>
+            <li><p>予約</p></li>
+            <li><button class="reservation__edit" @click="reservationEdit(reservation.id)">内容を変更する</button></li>
+            <li><fa icon="times-circle" class="clock delete" style="Regular" @click="reservationDelete(reservation.id, index)"/></li>
+          </ul>
+
+          <ul class="sp-mode__status__title__list">
+            <li><fa icon="clock" class="clock" /></li>
+            <li><p>予約</p></li>
+            <li><button class="spmode__reservation__edit" @click="reservationEdit(reservation.id)">内容を変更する</button></li>
+            <li><fa icon="times-circle" class="clock spmode__delete" style="Regular" @click="reservationDelete(reservation.id, index)"/></li>
+          </ul>
         </div>
         <table>
           <tr>
@@ -27,8 +38,6 @@
           </tr>
         </table>
       </div>
-      <button class="reservation__edit" @click="reservationEdit(reservation.id)">内容を変更する</button>
-      <fa icon="times-circle" class="clock" style="Regular" @click="reservationDelete(reservation.id, index)"/>
     </div>
 
     <!-- モーダル -->
@@ -38,7 +47,9 @@
           <div class="user-reservation__inner">
             <div class="user-resevation__data" v-show="isTable">
               <p class="user-reservation__title">予約情報</p>
-              <table class="user-reservation__table">
+
+              <!-- PCサイズ -->
+              <table class="pc-mode user-reservation__table">
                 <tr>
                   <th>店舗名</th>
                   <td>{{ reservationShop.shopname }}</td>
@@ -88,6 +99,67 @@
                   </td>
                   <td v-if="userReservationEditPeople != ''">
                     <button class="edit__reservation__button" @click="editReservationPeopleClear()">元に戻す</button>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- spサイズ -->
+              <table class="sp-mode user-reservation__table">
+                <tr>
+                  <th>店舗名</th>
+                  <td>{{ reservationShop.shopname }}</td>
+                </tr>
+                <tr>
+                  <th>予約日</th>
+                </tr>
+                <tr>
+                  <td v-if="userReservationEditDate == ''">
+                    {{ reservationShop.date }}
+                  </td>
+                  <td v-else class="sp-mode__edit__reservation__date">
+                    {{ userReservationEditDate }}
+                  </td>
+                  <td>
+                    <button class="sp-mode__edit__reservation__button" @click="editReservationDate()">変更</button>
+                  </td>
+                  <td v-if="userReservationEditDate != ''">
+                    <button class="sp-mode__edit__reservation__button" @click="editReservationDateClear()">元に戻す</button>
+                  </td>
+                </tr>
+
+                <tr>
+                  <th>予約時間</th>
+                </tr>
+                <tr>
+                  <td v-if="userReservationEditTime == ''">
+                    {{ reservationShop.time }}
+                  </td>
+                  <td v-else class="sp-mode__edit__reservation__time">
+                    {{ userReservationEditTime }}
+                  </td>
+                  <td>
+                    <button class="sp-mode__edit__reservation__button" @click="editReservationTime()">変更</button>
+                  </td>
+                  <td v-if="userReservationEditTime != ''">
+                    <button class="sp-mode__edit__reservation__button" @click="editReservationTimeClear()">元に戻す</button>
+                  </td>
+                </tr>
+
+                <tr>
+                  <th>予約人数</th>
+                </tr>
+                <tr>
+                  <td v-if="userReservationEditPeople == ''">
+                    {{ reservationShop.people }} 名
+                  </td>
+                  <td v-else class="sp-mode__edit__reservation__people">
+                    {{ userReservationEditPeople }} 名
+                  </td>
+                  <td>
+                    <button class="sp-mode__edit__reservation__button" @click="editReservationPeople()">変更</button>
+                  </td>
+                  <td v-if="userReservationEditPeople != ''">
+                    <button class="sp-mode__edit__reservation__button" @click="editReservationPeopleClear()">元に戻す</button>
                   </td>
                 </tr>
               </table>
@@ -187,7 +259,7 @@ export default {
       // モーダル
       reservationShop: [],
       isEdit: true,
-      isTable: false,
+      isTable: true,
       isDate: false,
       isTime: false,
       isPeople: false,
@@ -362,16 +434,17 @@ export default {
 
 
     // 予約削除
-    reservationDelete(id, index) {
-      axios.delete('http://127.0.0.1:8000/api/v1/shops/reservation/' + id)
-      .then(() => {
-        this.reservations.splice(index, 1);
-        alert('ご予約はキャンセルされました')
-        this.getReservation();
+    reservationDelete(id) {
+      if(confirm('予約を取り消しますか？')) {
+        axios.delete('http://127.0.0.1:8000/api/v1/shops/reservation/' + id)
+        .then(() => {
+          this.getReservation();
         if(this.reservations == 0) {
           this.noReservation = !this.noReservation
         }
-      })
+        })
+        alert('予約を取り消しました')
+      }
     },
 
   },
@@ -383,7 +456,7 @@ export default {
 
 <style>
   .reservation-status {
-    width: 50%;
+    width: 100%;
   }
 
   .reservation-status h2 {
@@ -399,7 +472,6 @@ export default {
     display: flex;
     justify-content: space-between;
     width: 70%;
-    /* height: 240px; */
     margin-bottom: 30px;
     font-weight: bold;
     border-radius: 10px;
@@ -410,8 +482,24 @@ export default {
   }
 
   .status__item {
+    width: 100%;
     display: flex;
     flex-direction: column;
+  }
+  .pc-mode__status__title__list {
+    width: 100%;
+    display: flex;
+    padding-left: 10px;
+    list-style: none;
+  }
+  .pc-mode__status__title__list li:nth-of-type(3){
+    margin-left: 40%;
+  }
+  .pc-mode__status__title__list li:nth-of-type(4){
+    margin-left: 10%;
+  }
+  .sp-mode__status__title__list {
+    display: none;
   }
   .status__item p {
     margin: 0 0 0 20px;
@@ -421,7 +509,10 @@ export default {
     display: flex;
     margin-bottom: 20px;
   }
-
+  .spmode__reservation__edit,
+  .spmode__delete {
+    display: none;
+  }
   .reservation__edit {
     height: 30px;
     margin-top: -5px;
@@ -444,6 +535,9 @@ export default {
   }
 
   /* モーダル */
+  .sp-mode {
+    display: none;
+  }
   .userReservatinModal {
     display: none;
   }
@@ -468,7 +562,10 @@ export default {
     width: 80%;
     margin: 0 auto;
   }
-  .edit__reservation__data {
+  .user-reservation__title,
+  .edit__reservation__data,
+  .edit__reservation__time,
+  .edit__reservation__people {
     font-weight: bold;
   }
   .user-reservation__table th,
@@ -524,5 +621,128 @@ export default {
     font-size: 20px;
     margin-bottom: 100px;
   }
+
+
+  .status__title__list {
+    width: 100%;
+    display: flex;
+    padding-left: 10px;
+    list-style: none;
+  }
+  .status__title__list li:nth-of-type(3){
+    margin-left: 40%;
+  }
+  .status__title__list li:nth-of-type(4){
+    margin-left: 10%;
+  }
+
+
+  .user-reservation__edit__text {
+    font-size: 24px;
+  }
+
+
+/* sp版 */
+@media screen and (max-width:480px) {
+  .reservation-title {
+    display: none;
+  }
+  .reservation-status {
+    width: 100%;
+  }
+  .status {
+    width: 82%;
+  }
+  .reservation__edit,
+  .delete {
+    display: none;
+  }
+  .pc-mode__status__title__list {
+    display: none;
+  }
+  .sp-mode__status__title__list {
+    width: 100%;
+    display: flex;
+    padding-left: 10px;
+    list-style: none;
+  }
+  /* .sp-mode__status__title__list li {
+    width: 25%;
+  } */
+  .sp-mode__status__title__list li:nth-of-type(1){
+    /* width: 10%; */
+    margin: 0;
+  }
+  .sp-mode__status__title__list li:nth-of-type(2) {
+    width: 30%;
+  }
+  .sp-mode__status__title__list li:nth-of-type(3){
+    width: 100%;
+    margin: 0;
+  }
+  .sp-mode__status__title__list li:nth-of-type(4){
+    width: 10%;
+    margin: 0;
+  }
+  .spmode__reservation__edit {
+    display: block;
+    margin-left: 60px;
+    height: 30px;
+    margin-top: -5px;
+    border: none;
+    border-radius: 4px;
+    color: blue;
+    font-weight: bold;
+    background: white;
+    cursor: pointer;
+  }
+  .spmode__delete {
+    display: block;
+    margin-left: 20px;
+  }
+  
+
+
+
+  /* モーダル */
+  .pc-mode {
+    display: none;
+  }
+  .sp-mode {
+    display: block;
+  }
+
+  .user-reservation__card {
+    width: 90%;
+  }
+  .user-reservation__table {
+    width: 90%;
+    font-size: 12px;
+    border: 1px solid black;
+  }
+  .spmode th {
+    width: 30%;
+  }
+  .sp-mode__edit__reservation__button {
+    width: 70%;
+    font-size: 12px;
+    padding: 6px;
+    background: yellow;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .sp-mode__edit__reservation__date,
+  .sp-mode__edit__reservation__time,
+  .sp-mode__edit__reservation__people {
+    font-size: 16px;
+  }
+  .user-reservation__table th,
+  .user-reservation__table td {
+    padding: 2px;
+    font-weight: bold;
+  }
+
+  
+}
 
 </style>

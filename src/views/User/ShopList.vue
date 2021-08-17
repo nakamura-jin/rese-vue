@@ -33,7 +33,6 @@
 
       <button class="mypage-link__button" @click="mypage">マイページへ</button>
       <button class="logout__button" @click="logout">ログアウト</button>
-      <p>{{ $store.state.user_id }}</p>
     </div>
     <div class="shop__item" v-for="shop in filteredShops" :key="shop.id">
       <img class="shop__image-small" :src="shop.image">
@@ -43,7 +42,7 @@
       <!-- 店舗評価 -->
         <div class="star">
           <!-- 0 〜 0.4 -->
-          <template v-if="setShopReview < 0.5">
+          <template v-if="getReview(shop.review) < 0.5">
             <fa icon="star" class="star__base"/>
             <fa icon="star" class="star__base"/>
             <fa icon="star" class="star__base"/>
@@ -51,7 +50,7 @@
             <fa icon="star" class="star__base"/>
           </template>
           <!-- 0.5 〜 1 -->
-          <template v-if="0.5 <= setShopReview && setShopReview < 1">
+          <template v-if="0.5 <= getReview(shop.review) && getReview(shop.review) < 1">
             <fa icon="star-half-alt" class="star__color"/>
             <fa icon="star" class="star__base"/>
             <fa icon="star" class="star__base"/>
@@ -59,7 +58,7 @@
             <fa icon="star" class="star__base"/>
           </template>
           <!-- 1 〜 1.4 -->
-          <template v-if="1 <= setShopReview && setShopReview < 1.5">
+          <template v-if="1 <= getReview(shop.review) && getReview(shop.review) < 1.5">
             <fa icon="star" class="star__color" />
             <fa icon="star" class="star__base"/>
             <fa icon="star" class="star__base"/>
@@ -67,7 +66,7 @@
             <fa icon="star" class="star__base"/>
           </template>
           <!-- 1.5 〜 2 -->
-          <template v-if="1.5 <= setShopReview && setShopReview < 2">
+          <template v-if="1.5 <= getReview(shop.review) && getReview(shop.review) < 2">
             <fa icon="star" class="star__color" />
             <fa icon="star-half-alt" class="star__color"/>
             <fa icon="star" class="star__base"/>
@@ -75,7 +74,7 @@
             <fa icon="star" class="star__base"/>
           </template>
           <!-- 2 〜 2.4 -->
-          <template v-if="2 <= setShopReview && setShopReview < 2.5">
+          <template v-if="2 <= getReview(shop.review) && getReview(shop.review) < 2.5">
             <fa icon="star" class="star__color" />
             <fa icon="star" class="star__color" />
             <fa icon="star" class="star__base"/>
@@ -83,7 +82,7 @@
             <fa icon="star" class="star__base"/>
           </template>
           <!-- 2.5 〜 3 -->
-          <template  v-if="2.5 <= setShopReview && setShopReview < 3">
+          <template  v-if="2.5 <= getReview(shop.review) && getReview(shop.review) < 3">
             <fa icon="star" class="star__color" />
             <fa icon="star" class="star__color" />
             <fa icon="star-half-alt" class="star__color"/>
@@ -91,7 +90,7 @@
             <fa icon="star" class="star__base"/>
           </template>
           <!-- 3 〜 3.4 -->
-          <template v-if="3 <= setShopReview && setShopReview < 3.5">
+          <template v-if="3 <= getReview(shop.review) && getReview(shop.review) < 3.5">
             <fa icon="star" class="star__color" />
             <fa icon="star" class="star__color" />
             <fa icon="star" class="star__color" />
@@ -99,7 +98,7 @@
             <fa icon="star" class="star__base"/>
           </template>
           <!-- 3.5 〜 4 -->
-          <template v-if="3.5 <= setShopReview && setShopReview < 4">
+          <template v-if="3.5 <= getReview(shop.review) && getReview(shop.review) < 4">
             <fa icon="star" class="star__color" />
             <fa icon="star" class="star__color" />
             <fa icon="star" class="star__color" />
@@ -107,7 +106,7 @@
             <fa icon="star" class="star__base"/>
           </template>
           <!-- 4 〜 4.4 -->
-          <template v-if="4 <= setShopReview && setShopReview < 4.5">
+          <template v-if="4 <= getReview(shop.review) && getReview(shop.review) < 4.5">
             <fa icon="star" class="star__color" />
             <fa icon="star" class="star__color" />
             <fa icon="star" class="star__color" />
@@ -115,7 +114,7 @@
             <fa icon="star" class="star__base"/>
           </template>
           <!-- 4.5 〜 4.9 -->
-          <template v-if="4.5 <= setShopReview && setShopReview < 5">
+          <template v-if="4.5 <= getReview(shop.review) && getReview(shop.review) < 5">
             <fa icon="star" class="star__color" />
             <fa icon="star" class="star__color" />
             <fa icon="star" class="star__color" />
@@ -123,15 +122,16 @@
             <fa icon="star-half-alt" class="star__color"/>
           </template>
           <!-- 5 -->
-          <template v-if="setShopReview == 5">
+          <template v-if="getReview(shop.review) == 5">
             <fa icon="star" class="star__color" />
             <fa icon="star" class="star__color" />
             <fa icon="star" class="star__color" />
             <fa icon="star" class="star__color" />
             <fa icon="star" class="star__color" />
           </template>
-          <span class="review">{{ setShopReview }}</span>
-          <span class="review__count">({{ getShopReview.length }}件)</span>
+          <span class="review">{{ getReview(shop.review) }}</span>
+          <span class="review__count">({{ shop.review.length }}件)</span>
+          <span class="review__reviewed" v-if="reviewed(shop.review)">評価済み</span>
         </div>
       <!-- 店舗評価ここまで -->
 
@@ -164,6 +164,9 @@ export default {
       area: '',
       genre: '',
       word: '',
+
+      shopStar: [],
+
     }
   },
   methods: {
@@ -181,25 +184,31 @@ export default {
           .then((response) => {
             this.likes = response.data.data
           })
-          //レビュー取得・表示
-          for(let i = 0; i < this.shops.length; i++) {
-            this.shopReviewId = this.shops[i]
-          }
-          axios.get('http://127.0.0.1:8000/api/v1/shops/' + this.shopReviewId.id + '/reviews')
-          .then((response) => {
-            this.getShopReview = response.data.data
-            let sum = 0;
-            for(let i = 0; i < this.getShopReview.length; i++) {
-              sum += Number(this.getShopReview[i].star)
-            }
-            if(this.getShopReview.length == 0) {
-              this.setShopReview = 0
-            } else {
-              this.setShopReview = (sum / this.getShopReview.length).toFixed(1)
-            }
-          })
         })
       })
+    },
+
+    // レビュー表示
+    getReview(review) {
+      if(review.length != 0) {
+        let sum = 0;
+        for(let i = 0; i < review.length; i++) {
+          sum += Number(review[i].star)
+        }
+        return (sum / review.length).toFixed(1)
+      } else {
+        return 0
+      }
+    },
+
+    reviewed(shop) {
+      if(shop.length != 0) {
+        for(let i = 0; i < shop.length; i++) {
+          if(this.tUser == shop[i].user_id) {
+            return true
+          }
+        }
+      }
     },
 
     // ハートマーク色選択
@@ -402,6 +411,12 @@ export default {
     margin-left: 10px;
   }
 
+  .review__reviewed {
+    font-size: 12px;
+    margin-left: 10px;
+    color: #888;
+  }
+
   .star__base {
     display: inline;
     color: #ddd;
@@ -409,5 +424,127 @@ export default {
   .star__color {
     color: goldenrod;
   }
+
+
+
+
+
+
+
+
+
+
+/* sp版 */
+@media screen and (max-width:480px){
+  .shop-list {
+    width: 100%;
+    display: block;
+    flex-wrap: nowrap;
+  }
+  .search-component {
+    display: block;
+    position: static;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .mypage-link__button,
+  .logout__button {
+    display: none;
+  }
+
+  .shop__item {
+    margin: 20px auto;
+    width: 90%;
+    height: 300px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 4px 4px 4px rgba(0,0,0,0.4);
+  }
+
+  .shop__image-small {
+    width: 100%;
+    height: 140px;
+    border-radius: 8px 8px 0 0 ;
+  }
+
+  .shop__area, .shop__genre {
+    font-size: 10px;
+    border: none;
+    font-weight: bold;
+  }
+
+  .shop__area {
+    margin-left: 0;
+  }
+
+  .like {
+    color: red
+  }
+
+  .base {
+    color: #ddd;
+  }
+
+
+/* 検索 */
+  .search {
+    width: 90%;
+    height: 36px;
+    margin: 0 auto;
+    background: white;
+    text-align: left;
+    line-height: 36px;
+    padding: 6px;
+    border-radius: 4px;
+    box-shadow: 4px 4px 4px rgba(0,0,0,0.4);
+  }
+  .select__area, .select__genre {
+    width: 23%;
+    height: 26px;
+    margin-left: 6px;
+    font-size: 16px;
+    border: none;
+    font-size: 12px;
+  }
+
+  .search-bar {
+    width: 40%;
+    height: 20px;
+    border: none;
+    font-size: 12px;
+  }
+  .search-icon {
+    margin-left: 6px;
+    margin-right: 6px;
+    color: gray;
+    font-size: 12px;
+  }
+
+
+  /* 店舗評価 */
+
+  .review {
+    margin-left: 10px;
+  }
+
+  .review__count {
+    margin-left: 10px;
+  }
+
+  .review__reviewed {
+    font-size: 12px;
+    margin-left: 10px;
+    color: #888;
+  }
+
+  .star__base {
+    display: inline;
+    color: #ddd;
+  }
+  .star__color {
+    color: goldenrod;
+  }
+}
 
 </style>

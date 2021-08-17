@@ -1,10 +1,10 @@
 <template>
-  <div class="login">
+  <div class="owner-login">
     <div class="login-form">
       <div class="form-header__owner">
         <p>Login</p>
       </div>
-      <div class="user_data">
+      <div class="owner__data">
         <div class="mail">
           <fa icon="envelope" class="login__icon"/>
           <validation-provider v-slot="{ errors }" rules="required|email">
@@ -57,6 +57,15 @@ export default {
             axios.get('http://127.0.0.1:8000/api/v1/shops')
             .then((response) => {
               this.checkHasShops = response.data.data
+              // for(let i = 0; i < this.checkHasShops.length; i++) {
+              //   const selectPage = this.checkHasShops[i]
+              //   if(selectPage.owner_id == loginOwner.id) {
+              //     console.log(selectPage.owner_id, loginOwner.id)
+              //     return this.$router.push('/owner')
+                // }
+                  // console.log(selectPage.owner_id, loginOwner.id)
+              //   return this.$router.push('/owner/shop/register')
+              // }
               let selectPage =
               this.checkHasShops.some((select) => {
                 if(select.owner_id == loginOwner.id){
@@ -100,7 +109,7 @@ export default {
 
 
 <style>
-  .login {
+  .owner-login {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -132,10 +141,10 @@ export default {
     color: white;
   }
 
-  .user_data {
+  .owner__data {
     margin: 30px 20px;
   }
-  .user_data input {
+  .owner__data input {
     width: 300px;
     margin-left: 20px;
     font-size: 16px;
@@ -169,5 +178,56 @@ export default {
 
   .error__login {
     color: red;
+  }
+
+
+
+  /* sp版 */
+  @media screen and (max-width:480px){
+    .owner-login {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80%;
+    }
+    .form-header__owner {
+      height: 40px;
+      border-radius: 8px 8px 0 0 ;
+      background: skyblue;
+    }
+
+    .form-header__owner p {
+      margin: 0;
+      text-align: left;
+      padding-left: 20px;
+      font-size: 20px;
+      line-height: 40px;
+      font-weight: bold;
+      color: white;
+    }
+    .owner__data {
+      margin: 20px 10px;
+    }
+    .owner__data input {
+      width: 80%;
+      margin-left: 20px;
+      font-size: 16px;
+      outline: none;
+      border-top: none;
+      border-right: none;
+      border-bottom: 1px solid gray;
+      border-left: none;
+    }
+    input::placeholder {
+      font-size: 14px;
+    }
+    .login__icon {
+      font-size: 12px;
+      color: gray;
+    }
+    .btn__login-owner {
+      font-size: 12px;
+    }
   }
 </style>

@@ -2,9 +2,10 @@
   <div class="shop__ditail">
     <div class="shop">
       <div class="shop-name">
-        <button class="back" @click="back">&lt;</button>
-        <h2>{{ setShop.shopname }}</h2>
-
+        <div class="sp_mode">
+          <button class="back" @click="back">&lt;</button>
+          <h2>{{ setShop.shopname }}</h2>
+        </div>
         <!-- 店舗評価 -->
           <div class="star__shop-ditail">
             <!-- 0  -->
@@ -126,6 +127,7 @@
         <!-- 時間  -->
         <validation-provider v-slot="{ errors }" rules="required">
         <select type="time" class="time" v-model="time" name="時間">
+          <option value="">時間を選択する</option>
           <option>10:00</option>
           <option>11:00</option>
           <option>12:00</option>
@@ -140,11 +142,12 @@
           <option>21:00</option>
           <option>22:00</option>
         </select>
-        <div class="error__reservation">{{ errors[0] }}</div>
+        <div class="error__reservation" v-if="time == ''">{{ errors[0] }}</div>
         </validation-provider>
         <!-- 人数  -->
         <validation-provider v-slot="{ errors }" rules="required">
         <select class="people" v-model="people" name="人数">
+          <option value="">人数を選択する</option>
           <option value="1">1名</option>
           <option value="2">2名</option>
           <option value="3">3名</option>
@@ -174,7 +177,7 @@
           </tr>
           <tr>
             <th>Number</th>
-            <td>{{ people }}名</td>
+            <td>{{ people }} <span v-if="people != ''">名</span></td>
           </tr>
         </table>
       </div>
@@ -230,8 +233,8 @@ export default {
       setShop: [],
       shopData: [],
       date: '',
-      time: '10:00',
-      people: 1,
+      time: '',
+      people: '',
       getReview: [],
       setHasReview: '',
 
@@ -282,9 +285,32 @@ export default {
           time: this.time,
           people: this.people
         };
-        axios.post('http://127.0.0.1:8000/api/v1/shops/' +this.shop_id + '/reservation', reservationData)
-        this.$router.push('/done')
+        // 日付確認
+        const checkReservationDay = new Date()
+        var reservationMonth = ("0" + (checkReservationDay.getMonth()+1)).slice(-2)
+        var reservationDay = ("0" + (checkReservationDay.getDate())).slice(-2)
+        var makeReservationDay = checkReservationDay.getFullYear() + '-' + reservationMonth + '-' + reservationDay
+        if(this.time == '' || this.people == '') {
+          alert('予約時間または来店人数を選択して下さい')
+          return
+        } else {
+          if(makeReservationDay > this.date) {
+            alert('日付は今日以降で設定してください')
+          } else {
+          console.log(reservationData)
+          // axios.post('http://127.0.0.1:8000/api/v1/shops/' +this.shop_id + '/reservation', reservationData)
+          this.$router.push('/done')
+          }
+        }
       })
+    },
+
+    getToday() {
+      let today = new Date()
+      var month = ("0" + (today.getMonth()+1)).slice(-2)
+      var day = ("0" + (today.getDate())).slice(-2)
+      this.setToday = today.getFullYear() + '-' + month + '-' + day
+      return this.setToday
     },
 
     // 評価する
@@ -338,6 +364,9 @@ export default {
   width: 42%;
   margin: 60px;
 }
+.sp_mode {
+    display: flex;
+  }
 .back {
   width: 36px;
   height: 36px;
@@ -512,5 +541,93 @@ button {
 
 .toggle {
   display: none;
+}
+
+
+
+
+/* sp版 */
+@media screen and (max-width:480px){
+  .shop__ditail {
+    display: block;
+    width: 100%;
+    margin: 60px 0;
+    font-size: 1rem;
+  }
+  .shop-name {
+    display: block;
+    margin-top: 20px;
+  }
+  .shop {
+    width: 90%;
+    margin: 0 auto;
+  }
+  .back {
+    width: 24px;
+    height: 24px;
+    margin: 0px;
+    border-radius: 8px;
+    font-size: 16px;
+    border: none;
+    box-shadow: 4px 4px 4px rgba(0,0,0,0.4);
+    background: white;
+  }
+  .sp_mode {
+    display: flex;
+  }
+  .sp_mode h2{
+    margin: 0 auto;
+  }
+  .star__shop-ditail {
+    margin-top: 20px;
+  }
+  .rating {
+    margin-top: 10px;
+  }
+
+
+
+/* 予約表デザイン */
+
+
+  .ReservationBoard {
+    width: 90%;
+    margin: 100px auto;
+    height: 700px;
+    background: blue;
+    border-radius: 8px;
+  }
+  .time, .people {
+    width: 100%;
+  }
+  .confirmation {
+    width: 100%;
+    background: rgb(0, 102, 255);
+    border-radius: 8px;
+    padding: 10px 20px;
+  }
+
+/* 店舗評価 */
+  .container {
+    width: 80%;
+    height: 50%;
+  }
+
+}
+
+
+
+
+
+
+/* sp版 */
+@media screen and (max-width:480px){
+  .ReservationBoard {
+    height: 550px;
+  }
+  .rating {
+    width: 100px;
+    padding: 6px;
+  }
 }
 </style>

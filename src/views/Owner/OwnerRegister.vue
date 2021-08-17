@@ -35,7 +35,7 @@
         <button class="btn__register-owner" @click="ownerRegister">登録</button>
       </div>
     </div>
-    <p>オーナー登録がお済みの場合は<span @click="OwnerLoginPage" class="transition__login">ログイン</span>へ</p>
+    <p>登録がお済みの場合は<span @click="OwnerLoginPage" class="transition__login">ログイン</span>へ</p>
   </div>
 </template>
 
@@ -171,6 +171,55 @@ export default {
   .error__register {
     color: red;
     box-sizing: border-box;
+  }
+
+
+  @media screen and (max-width:480px){
+
+    .register__owner {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80%;
+    }
+    .register-form {
+      width: 100%;
+    }
+    .box-title__owner {
+      height: 40px;
+      border-radius: 8px 8px 0 0 ;
+      background: skyblue;
+    }
+    .box-title__owner p {
+      margin: 0;
+      text-align: left;
+      padding-left: 20px;
+      font-size: 20px;
+      line-height: 40px;
+      font-weight: bold;
+      color: white;
+    }
+    .new-owner {
+      margin: 20px 10px;
+    }
+    .new-owner input {
+      width: 80%;
+      margin-left: 20px;
+      font-size: 16px;
+      outline: none;
+      border-top: none;
+      border-right: none;
+      border-bottom: 1px solid gray;
+      border-left: none;
+    }
+    input::placeholder {
+      font-size: 14px;
+    }
+    .register__icon {
+      font-size: 12px;
+      color: gray;
+    }
   }
 </style>
 

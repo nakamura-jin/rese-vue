@@ -1,6 +1,6 @@
 <template>
   <div class="favorite-shop">
-    <h2>お気に入り店舗</h2>
+    <h2 class="favorite-shop__title">お気に入り店舗</h2>
     <div v-show="noLikeShop"><p class="no__reservation">お気に入り店舗はありません</p></div>
     <div class="card">
       <div class="mypage__item" v-for="(like, index) in myLikeShops" :key="like.id">
@@ -68,7 +68,7 @@ export default {
 
 <style>
   .favorite-shop {
-    width: 50%;
+    width: 100%;
   }
 
   .favorite-shop h2 {
@@ -123,5 +123,30 @@ export default {
 
   .showInner {
     display: none;
+  }
+
+
+
+
+
+  /* sp版 */
+  @media screen and (max-width:480px){
+    .mypage__item {
+      width: 100%;
+      height: 300px;
+    }
+    .card {
+      display: block;
+      flex-wrap: nowrap;
+    }
+    .favorite-shop__title {
+      display: none;
+    }
+    .favorite-shop {
+      width: 100%;
+    }
+    .shop__image-middle {
+      width: 100%;
+    }
   }
 </style>

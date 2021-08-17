@@ -59,7 +59,7 @@ export default {
         alert("メールアドレスまたはパスワードが入力されていません。");
         return;
       }
-      firebase
+      await firebase
         .auth()
         .createUserWithEmailAndPassword(this.Email, this.Password)
         .then((response) => {
@@ -69,8 +69,15 @@ export default {
             email: this.Email,
             password: this.Password
           }
-          axios.post('http://127.0.0.1:8000/api/v1/users/register', sendData);
-          this.$router.push("/thanks");
+          console.log(sendData)
+          axios.post('http://127.0.0.1:8000/api/v1/users/register', sendData)
+          firebase.auth().currentUser.sendEmailVerification()
+            .then(() => {
+              this.$router.push("/thanks");
+            })
+            .catch(function(error) {
+              console.log(error)
+            })
         })
         .catch((error) => {
           switch (error.code) {
@@ -106,7 +113,6 @@ export default {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    /* width: 30%; */
   }
 
   .register-form {
@@ -175,6 +181,58 @@ export default {
   .error__register {
     color: red;
     box-sizing: border-box;
+  }
+
+
+
+  @media screen and (max-width:480px) {
+    .register {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80%;
+    }
+    .register__icon {
+      font-size: 12px;
+    }
+    .new-user input {
+      width: 80%;
+      margin-left: 20px;
+      font-size: 16px;
+      outline: none;
+      border-top: none;
+      border-right: none;
+      border-bottom: 1px solid gray;
+      border-left: none;
+    }
+    .box-title {
+      height: 40px;
+      border-radius: 8px 8px 0 0 ;
+      background: blue;
+    }
+    .box-title p {
+      margin: 0;
+      text-align: left;
+      padding-left: 20px;
+      font-size: 16px;
+      line-height: 40px;
+      font-weight: bold;
+      color: white;
+    }
+    .register__icon {
+      font-size: 12px;
+      color: gray;
+    }
+    input::placeholder {
+      font-size: 12px;
+    }
+    .new-user {
+      margin: 20px 10px;
+    }
+    .btn__register {
+      font-size: 12px;
+    }
   }
 </style>
 

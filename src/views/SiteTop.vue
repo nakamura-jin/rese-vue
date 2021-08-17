@@ -42,4 +42,32 @@ export default {
     font-size: 24px;
     cursor: pointer;
   }
+
+
+
+
+  /* sp版 */
+  @media screen and (max-width:480px){
+
+    .select {
+      display: block;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .select__user, .select__owner {
+      width: 80%;
+      padding: 40px 0;
+      margin: 0 auto;
+      background: blue;
+      color: white;
+      border-radius: 8px;
+      font-size: 24px;
+      cursor: pointer;
+    }
+    .select__user {
+      margin-bottom: 20px;
+    }
+  }
 </style>
