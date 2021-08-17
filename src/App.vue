@@ -24,7 +24,7 @@
                 <fa icon="sign-in-alt" class="size sp__icon"/>
                 <li class="link__title">トップページ</li>
               </button>
-              <button class="link__logout">
+              <button class="link__logout" @click="menubarLogout">
                 <fa icon="sign-out-alt" class="size sp__icon"/>
                 <li class="link__title">ログアウト</li>
               </button>
@@ -83,6 +83,16 @@ export default {
       this.isToggle = !this.isToggle
       this.isClose = !this.isClose
       this.$router.push('/')
+    },
+    menubarLogout() {
+      firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        this.isToggle = !this.isToggle
+        this.isClose = !this.isClose
+        this.$router.push('/rese')
+      })
     }
   },
   created() {

@@ -57,15 +57,15 @@ export default {
             axios.get('http://127.0.0.1:8000/api/v1/shops')
             .then((response) => {
               this.checkHasShops = response.data.data
-              // for(let i = 0; i < this.checkHasShops.length; i++) {
-              //   const selectPage = this.checkHasShops[i]
-              //   if(selectPage.owner_id == loginOwner.id) {
-              //     console.log(selectPage.owner_id, loginOwner.id)
-              //     return this.$router.push('/owner')
-                // }
-                  // console.log(selectPage.owner_id, loginOwner.id)
-              //   return this.$router.push('/owner/shop/register')
-              // }
+              for(let i = 0; i < this.checkHasShops.length; i++) {
+                const selectPage = this.checkHasShops[i]
+                if(selectPage.owner_id == loginOwner.id) {
+                  console.log(selectPage.owner_id, loginOwner.id)
+                  return this.$router.push('/owner')
+                }
+                  console.log(selectPage.owner_id, loginOwner.id)
+                return this.$router.push('/owner/shop/register')
+              }
               let selectPage =
               this.checkHasShops.some((select) => {
                 if(select.owner_id == loginOwner.id){
