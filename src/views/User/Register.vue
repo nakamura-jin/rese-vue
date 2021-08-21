@@ -69,6 +69,7 @@ export default {
             email: this.Email,
             password: this.Password
           }
+
           axios.post('http://us-cdbr-east-04.cleardb.com/api/v1/users/register', sendData)
           firebase.auth().currentUser.sendEmailVerification()
             .then(() => {
