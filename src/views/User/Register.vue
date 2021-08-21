@@ -70,7 +70,7 @@ export default {
             password: this.Password
           }
 
-          axios.post('https://www.cleardb.com/service/1.0/api/v1/users/register', sendData)
+          axios.post('https://thawing-brook-30782.herokuapp.com/api/v1/users/register', sendData)
           firebase.auth().currentUser.sendEmailVerification()
             .then(() => {
               this.$router.push("/thanks");
