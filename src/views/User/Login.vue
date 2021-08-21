@@ -66,7 +66,7 @@ export default {
       firebase
         .auth()
         .signInWithEmailAndPassword(this.Email, this.Password)
-        .then(() =>{
+        .then((user) =>{
           if(user.user.emailVerified == false) {
             this.loginCard = false;
             this.emailVerified = true;
