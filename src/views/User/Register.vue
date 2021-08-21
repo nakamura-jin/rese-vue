@@ -70,7 +70,7 @@ export default {
             password: this.Password
           }
 
-          axios.post('http://us-cdbr-east-04.cleardb.com/api/v1/users/register', sendData)
+          axios.post('us-cdbr-east-04.cleardb.com/api/v1/users/register', sendData)
           firebase.auth().currentUser.sendEmailVerification()
             .then(() => {
               this.$router.push("/thanks");

@@ -23,12 +23,12 @@ Vue.use(VueRouter)
 const routes = [
 
   {
-    path: '/rese',
+    path: '/',
     name: 'SiteTop',
     component: SiteTop,
   },
   {
-    path: '/',
+    path: '/top',
     name: 'ShopList',
     component: ShopList,
     props: true

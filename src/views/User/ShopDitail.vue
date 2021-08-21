@@ -248,7 +248,7 @@ export default {
   methods: {
     // 前のページに戻る
     back() {
-      this.$router.push('/');
+      this.$router.push('/top');
     },
 
     shopDotail() {
@@ -256,7 +256,7 @@ export default {
       .auth()
       .onAuthStateChanged((user) => {
         if(!user) {
-          this.$router.push('/rese')
+          this.$router.push('/')
         } else {
           // ショップデータ取得
           axios.get('http://127.0.0.1:8000/api/v1/shops/' + this.shop_id)

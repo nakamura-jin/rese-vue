@@ -76,7 +76,7 @@ export default {
             }
             axios.post('http://127.0.0.1:8000/api/v1/users/login', sendUser)
             .then(() => {
-              this.$router.push('/');
+              this.$router.push('/top');
             })
           }
         })

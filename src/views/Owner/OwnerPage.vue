@@ -444,7 +444,7 @@ export default {
       .auth()
       .onAuthStateChanged(user => {
         if(!user) {
-          this.$router.push('/rese')
+          this.$router.push('/')
         } else {
           this.owner_id = user.uid
           axios.get('http://127.0.0.1:8000/api/v1/owners/' + user.uid)

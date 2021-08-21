@@ -67,7 +67,7 @@ export default {
       .auth()
       .signOut()
       .then(() => {
-        this.$router.push('/rese')
+        this.$router.push('/')
       })
     },
     menu() {
@@ -91,7 +91,7 @@ export default {
       .then(() => {
         this.isToggle = !this.isToggle
         this.isClose = !this.isClose
-        this.$router.push('/rese')
+        this.$router.push('/')
       })
     }
   },
