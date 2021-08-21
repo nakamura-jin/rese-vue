@@ -178,7 +178,6 @@ export default {
         this.error_message = error
       }, () => {
         uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-          console.log('File available at', downloadURL);
           firebase
           .auth()
           .onAuthStateChanged((user) => {
@@ -193,10 +192,8 @@ export default {
             if(sendShopData.image  == undefined) {
               sendShopData.image = 'no_image.png'
             }
-            console.log(sendShopData)
             axios.post('http://127.0.0.1:8000/api/v1/owners/' + user.uid + '/shop', sendShopData)
               .then(() => {
-                console.log('登録完了')
                 this.createdShop = true;
                 this.resetShop();
               })

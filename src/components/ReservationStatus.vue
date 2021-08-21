@@ -412,7 +412,6 @@ export default {
         setReservationUpdateData.people = getReservationUser.people
       }
       axios.put('http://127.0.0.1:8000/api/v1/shops/reservation/' + getReservationUser.id , setReservationUpdateData)
-      console.log(getReservationUser.id)
       this.isTable = false;
       this.isReservationUpdate = true;
     },

@@ -67,10 +67,10 @@ export default {
         .auth()
         .signInWithEmailAndPassword(this.Email, this.Password)
         .then(() =>{
-          // if(user.user.emailVerified == false) {
-          //   this.loginCard = false;
-          //   this.emailVerified = true;
-          // } else {
+          if(user.user.emailVerified == false) {
+            this.loginCard = false;
+            this.emailVerified = true;
+          } else {
             const sendUser = {
             email: this.Email
             }
@@ -78,7 +78,7 @@ export default {
             .then(() => {
               this.$router.push('/');
             })
-          // }
+          }
         })
         .catch((error) => {
           switch (error.code) {

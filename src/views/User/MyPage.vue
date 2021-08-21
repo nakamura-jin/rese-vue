@@ -67,10 +67,14 @@ export default {
     firebase
     .auth()
     .onAuthStateChanged(user => {
-      axios.get('http://127.0.0.1:8000/api/v1/users/' + user.uid)
-      .then((response) => {
-        this.user = response.data.data
-      })
+      if(!user) {
+        this.$router.push('/rese')
+      } else {
+        axios.get('http://127.0.0.1:8000/api/v1/users/' + user.uid)
+        .then((response) => {
+          this.user = response.data.data
+        })
+      }
     })
   }
 }

@@ -252,23 +252,31 @@ export default {
     },
 
     shopDotail() {
-    // ショップデータ取得
-    axios.get('http://127.0.0.1:8000/api/v1/shops/' + this.shop_id)
-    .then((response) => {
-      this.setShop = response.data.data
-    })
-    // レビュー表示
-    axios.get('http://127.0.0.1:8000/api/v1/shops/' + this.shop_id + '/reviews')
-      .then((response) => {
-        this.getReview = response.data.data
-        let sum = 0;
-        for(let i = 0; i < this.getReview.length; i++) {
-          sum += Number(this.getReview[i].star)
-        }
-        if(this.getReview.length == 0) {
-          this.setHasReview = 0
+      firebase
+      .auth()
+      .onAuthStateChanged((user) => {
+        if(!user) {
+          this.$router.push('/rese')
         } else {
-          this.setHasReview = (sum / this.getReview.length).toFixed(1)
+          // ショップデータ取得
+          axios.get('http://127.0.0.1:8000/api/v1/shops/' + this.shop_id)
+          .then((response) => {
+            this.setShop = response.data.data
+          })
+          // レビュー表示
+          axios.get('http://127.0.0.1:8000/api/v1/shops/' + this.shop_id + '/reviews')
+          .then((response) => {
+            this.getReview = response.data.data
+            let sum = 0;
+            for(let i = 0; i < this.getReview.length; i++) {
+              sum += Number(this.getReview[i].star)
+            }
+            if(this.getReview.length == 0) {
+              this.setHasReview = 0
+            } else {
+              this.setHasReview = (sum / this.getReview.length).toFixed(1)
+            }
+          })
         }
       })
     },
@@ -297,8 +305,7 @@ export default {
           if(makeReservationDay > this.date) {
             alert('日付は今日以降で設定してください')
           } else {
-          console.log(reservationData)
-          // axios.post('http://127.0.0.1:8000/api/v1/shops/' +this.shop_id + '/reservation', reservationData)
+          axios.post('http://127.0.0.1:8000/api/v1/shops/' +this.shop_id + '/reservation', reservationData)
           this.$router.push('/done')
           }
         }

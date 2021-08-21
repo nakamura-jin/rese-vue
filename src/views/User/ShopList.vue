@@ -175,16 +175,20 @@ export default {
       firebase
       .auth()
       .onAuthStateChanged(user => {
-        axios.get('http://127.0.0.1:8000/api/v1/shops')
-        .then((response) => {
-          this.shops = response.data.data;
-          this.tUser = user.uid
-          // ログインユーザーのお気に入り取得
-          axios.get('http://127.0.0.1:8000/api/v1/users/' + this.tUser + '/like')
+        if(!user) {
+          this.$router.push('/rese')
+        } else {
+          axios.get('http://127.0.0.1:8000/api/v1/shops')
           .then((response) => {
-            this.likes = response.data.data
+            this.shops = response.data.data;
+            this.tUser = user.uid
+            // ログインユーザーのお気に入り取得
+            axios.get('http://127.0.0.1:8000/api/v1/users/' + this.tUser + '/like')
+            .then((response) => {
+              this.likes = response.data.data
+            })
           })
-        })
+        }
       })
     },
 

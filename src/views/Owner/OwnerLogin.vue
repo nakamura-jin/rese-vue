@@ -60,10 +60,8 @@ export default {
               for(let i = 0; i < this.checkHasShops.length; i++) {
                 const selectPage = this.checkHasShops[i]
                 if(selectPage.owner_id == loginOwner.id) {
-                  console.log(selectPage.owner_id, loginOwner.id)
                   return this.$router.push('/owner')
                 }
-                  console.log(selectPage.owner_id, loginOwner.id)
                 return this.$router.push('/owner/shop/register')
               }
               let selectPage =

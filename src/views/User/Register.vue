@@ -69,14 +69,13 @@ export default {
             email: this.Email,
             password: this.Password
           }
-          console.log(sendData)
           axios.post('http://127.0.0.1:8000/api/v1/users/register', sendData)
           firebase.auth().currentUser.sendEmailVerification()
             .then(() => {
               this.$router.push("/thanks");
             })
             .catch(function(error) {
-              console.log(error)
+              return error
             })
         })
         .catch((error) => {

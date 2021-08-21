@@ -443,12 +443,16 @@ export default {
       firebase
       .auth()
       .onAuthStateChanged(user => {
-        this.owner_id = user.uid
-        axios.get('http://127.0.0.1:8000/api/v1/owners/' + user.uid)
-        .then((response) => {
-          this.ownerShop = response.data.data
-          this.getReservationPeople();
-        })
+        if(!user) {
+          this.$router.push('/rese')
+        } else {
+          this.owner_id = user.uid
+          axios.get('http://127.0.0.1:8000/api/v1/owners/' + user.uid)
+          .then((response) => {
+            this.ownerShop = response.data.data
+            this.getReservationPeople();
+          })
+        }
       })
     },
 
@@ -506,7 +510,6 @@ export default {
         alert('予約を取り消しました')
         axios.delete('http://127.0.0.1:8000/api/v1/shops/reservation/' + canselId)
         this.getOwnerShop();
-        console.log(canselId)
       }
     },
 

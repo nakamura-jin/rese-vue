@@ -70,7 +70,6 @@ export default {
             password: this.OwnerPassword
           }
           axios.post('http://127.0.0.1:8000/api/v1/owners/register', sendOwnerData);
-          console.log(sendOwnerData)
           this.$router.push("/owner/thanks")
         })
         .catch((error) => {
