@@ -70,7 +70,7 @@ export default {
       if(!user) {
         this.$router.push('/')
       } else {
-        axios.get('http://127.0.0.1:8000/api/v1/users/' + user.uid)
+        axios.get('https://rese-app.herokuapp.com/api/v1/users/' + user.uid)
         .then((response) => {
           this.user = response.data.data
         })

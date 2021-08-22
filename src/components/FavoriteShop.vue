@@ -35,7 +35,7 @@ export default {
       firebase
       .auth()
       .onAuthStateChanged((user) => {
-        axios.get('http://127.0.0.1:8000/api/v1/users/' + user.uid + '/like')
+        axios.get('https://rese-app.herokuapp.com/api/v1/users/' + user.uid + '/like')
         .then((response) => {
           this.myLikeShops = response.data.data
           if(this.myLikeShops == 0) {
@@ -45,7 +45,7 @@ export default {
       })
     },
     deleteFavorite(id, index) {
-      axios.delete('http://127.0.0.1:8000/api/v1/shops/' + id + '/like')
+      axios.delete('https://rese-app.herokuapp.com/api/v1/shops/' + id + '/like')
       .then(() => {
         this.myLikeShops.splice(index, 1);
         alert('お気に入り登録が解除されました')

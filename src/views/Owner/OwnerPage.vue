@@ -447,7 +447,7 @@ export default {
           this.$router.push('/')
         } else {
           this.owner_id = user.uid
-          axios.get('http://127.0.0.1:8000/api/v1/owners/' + user.uid)
+          axios.get('https://rese-app.herokuapp.com/api/v1/owners/' + user.uid)
           .then((response) => {
             this.ownerShop = response.data.data
             this.getReservationPeople();
@@ -477,7 +477,7 @@ export default {
 
     // 予約情報取得
     getReservationPeople() {
-      axios.get('http://127.0.0.1:8000/api/v1/owners/' + this.ownerShop.shop_id + '/reservations')
+      axios.get('https://rese-app.herokuapp.com/api/v1/owners/' + this.ownerShop.shop_id + '/reservations')
       .then((response) => {
         this.ReservationPeople = response.data.data
         this.setTodayReservation = this.ReservationPeople.filter((rsv) => rsv.date == this.setToday)
@@ -508,7 +508,7 @@ export default {
     cansel(canselId) {
       if(confirm('予約を取り消しますか？')) {
         alert('予約を取り消しました')
-        axios.delete('http://127.0.0.1:8000/api/v1/shops/reservation/' + canselId)
+        axios.delete('https://rese-app.herokuapp.com/api/v1/shops/reservation/' + canselId)
         this.getOwnerShop();
       }
     },
@@ -529,7 +529,7 @@ export default {
       if(this.updateReservationPeople == '') {
         updateReservationData.people = makeUpdateData.people
       }
-      axios.put('http://127.0.0.1:8000/api/v1/shops/reservation/' + makeUpdateData.id , updateReservationData)
+      axios.put('https://rese-app.herokuapp.com/api/v1/shops/reservation/' + makeUpdateData.id , updateReservationData)
       this.isUpdatedReservation = false
       this.reservationBeforeData = true
       this.getOwnerShop();
