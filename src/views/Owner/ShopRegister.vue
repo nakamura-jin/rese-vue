@@ -197,6 +197,9 @@ export default {
               this.createdShop = true;
               this.resetShop();
             })
+            .catch((error) => {
+              console.log(error)
+            })
           })
         });
       });
