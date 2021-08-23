@@ -33,7 +33,8 @@ const Config = {
   storageBucket: "rese-3fa68.appspot.com",
   messagingSenderId: "296410653533",
   appId: "1:296410653533:web:53782d3ee3e61b58d33eb4",
-  measurementId: "G-XV67D2MJS4"
+  measurementId: "G-XV67D2MJS4",
+  storageBucket: "gs://rese-3fa68.appspot.com"
 };
 
 firebase.initializeApp(Config);
