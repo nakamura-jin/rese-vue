@@ -192,7 +192,7 @@ export default {
             if(sendShopData.image  == undefined) {
               sendShopData.image = 'no_image.png'
             }
-            axios.post('https://rese-app.herokuapp.com/api/v1/owners/' + user.uid + '/shop', sendShopData)
+            axios.post("https://rese-app.herokuapp.com/api/v1/owners/" + user.uid + '/shop', sendShopData)
             .then(() => {
               this.createdShop = true;
               this.resetShop();
