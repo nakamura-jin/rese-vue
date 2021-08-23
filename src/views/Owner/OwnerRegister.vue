@@ -69,7 +69,7 @@ export default {
             email: this.OwnerEmail,
             password: this.OwnerPassword
           }
-          axios.post('https://rese-app.herokuapp.com/api/v1/owners/register', sendOwnerData);
+          axios.post("https://rese-app.herokuapp.com/api/v1/owners/register", sendOwnerData)
           this.$router.push("/owner/thanks")
         })
         .catch((error) => {
