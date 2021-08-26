@@ -165,19 +165,19 @@ export default {
   methods: {
     registerShop() {
       // storageに保存
-      let makeFile = this.file
-      var storageRef = firebase.storage().ref('rese/' + makeFile.name);
-      var uploadTask = storageRef.put(makeFile);
+      // let makeFile = this.file
+      // var storageRef = firebase.storage().ref('rese/' + makeFile.name);
+      // var uploadTask = storageRef.put(makeFile);
 
-      var uploader = document.getElementById('uploader')
-      uploadTask.on('state_changed', (snapshot) => {
-        var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        uploader.value = percentage
-      }, (error) => {
-        this.errorMessage = true
-        this.error_message = error
-      }, () => {
-        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+      // var uploader = document.getElementById('uploader')
+      // uploadTask.on('state_changed', (snapshot) => {
+      //   var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      //   uploader.value = percentage
+      // }, (error) => {
+      //   this.errorMessage = true
+      //   this.error_message = error
+      // }, () => {
+      //   uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
           firebase
           .auth()
           .onAuthStateChanged((user) => {
@@ -186,7 +186,7 @@ export default {
               overview: this.overview,
               area_id: this.shopArea,
               genre_id: this.shopGenre,
-              image: downloadURL,
+              image: this.file,
               owner_id: user.uid,
             }
             if(sendShopData.image  == undefined) {
@@ -201,8 +201,8 @@ export default {
               console.log(error.response)
             })
           })
-        });
-      });
+        // });
+      // });
     },
     uploadFile(){
       this.file = this.$refs.preview.files[0]
