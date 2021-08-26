@@ -70,7 +70,7 @@ export default {
             password: this.Password
           }
 
-          axios.post("https://rese-app.herokuapp.com/api/v1/users/register", sendData)
+          axios.post("http://127.0.0.1:8000/api/v1/users/register", sendData)
           firebase.auth().currentUser.sendEmailVerification()
             .then(() => {
               this.$router.push("/thanks");

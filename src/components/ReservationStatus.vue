@@ -280,7 +280,7 @@ export default {
       firebase
       .auth()
       .onAuthStateChanged(user => {
-        axios.get('https://rese-app.herokuapp.com/api/v1/users/' + user.uid + '/reservations')
+        axios.get('http://127.0.0.1:8000/api/v1/users/' + user.uid + '/reservations')
         .then((response) => {
           this.reservations = response.data.data;
 
@@ -314,7 +314,7 @@ export default {
     reservationEdit(id) {
       this.isEdit = false;
       this.isTable = true;
-      axios.get('https://rese-app.herokuapp.com/api/v1/shops/reservation/' + id)
+      axios.get('http://127.0.0.1:8000/api/v1/shops/reservation/' + id)
       .then((response) => {
         this.reservationShop = response.data.data
       })
@@ -411,7 +411,7 @@ export default {
       if(this.userReservationEditPeople == '') {
         setReservationUpdateData.people = getReservationUser.people
       }
-      axios.put('https://rese-app.herokuapp.com/api/v1/shops/reservation/' + getReservationUser.id , setReservationUpdateData)
+      axios.put('http://127.0.0.1:8000/api/v1/shops/reservation/' + getReservationUser.id , setReservationUpdateData)
       this.isTable = false;
       this.isReservationUpdate = true;
     },
@@ -435,7 +435,7 @@ export default {
     // 予約削除
     reservationDelete(id) {
       if(confirm('予約を取り消しますか？')) {
-        axios.delete('https://rese-app.herokuapp.com/api/v1/shops/reservation/' + id)
+        axios.delete('http://127.0.0.1:8000/api/v1/shops/reservation/' + id)
         .then(() => {
           this.getReservation();
         if(this.reservations == 0) {

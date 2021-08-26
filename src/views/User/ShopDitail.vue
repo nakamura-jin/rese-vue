@@ -259,12 +259,12 @@ export default {
           this.$router.push('/')
         } else {
           // ショップデータ取得
-          axios.get('https://rese-app.herokuapp.com/api/v1/shops/' + this.shop_id)
+          axios.get('http://127.0.0.1:8000/api/v1/shops/' + this.shop_id)
           .then((response) => {
             this.setShop = response.data.data
           })
           // レビュー表示
-          axios.get('https://rese-app.herokuapp.com/api/v1/shops/' + this.shop_id + '/reviews')
+          axios.get('http://127.0.0.1:8000/api/v1/shops/' + this.shop_id + '/reviews')
           .then((response) => {
             this.getReview = response.data.data
             let sum = 0;
@@ -305,7 +305,7 @@ export default {
           if(makeReservationDay > this.date) {
             alert('日付は今日以降で設定してください')
           } else {
-          axios.post('https://rese-app.herokuapp.com/api/v1/shops/' +this.shop_id + '/reservation', reservationData)
+          axios.post('http://127.0.0.1:8000/api/v1/shops/' +this.shop_id + '/reservation', reservationData)
           this.$router.push('/done')
           }
         }
@@ -330,7 +330,7 @@ export default {
           shop_id: this.shop_id,
           star: this.star
         };
-        axios.post('https://rese-app.herokuapp.com/api/v1/shops/' + this.shop_id + '/review', sendRating)
+        axios.post('http://127.0.0.1:8000/api/v1/shops/' + this.shop_id + '/review', sendRating)
         this.rated = !this.rated
         this.isPush = !this.isPush
       })
