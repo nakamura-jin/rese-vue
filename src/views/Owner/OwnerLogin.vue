@@ -51,10 +51,10 @@ export default {
           const sendOwner = {
             email: this.OwnerEmail
           };
-          axios.post('http://127.0.0.1:8000/api/v1/owners/login', sendOwner)
+          axios.post('https://rese-app.herokuapp.com/api/v1/owners/login', sendOwner)
           .then((response) => {
             const loginOwner = response.data.data
-            axios.get('http://127.0.0.1:8000/api/v1/shops')
+            axios.get('https://rese-app.herokuapp.com/api/v1/shops')
             .then((response) => {
               this.checkHasShops = response.data.data
               for(let i = 0; i < this.checkHasShops.length; i++) {

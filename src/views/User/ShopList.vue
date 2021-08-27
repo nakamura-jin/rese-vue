@@ -178,12 +178,12 @@ export default {
         if(!user) {
           this.$router.push('/')
         } else {
-          axios.get('http://127.0.0.1:8000/api/v1/shops')
+          axios.get('https://rese-app.herokuapp.com/api/v1/shops')
           .then((response) => {
             this.shops = response.data.data;
             this.tUser = user.uid
             // ログインユーザーのお気に入り取得
-            axios.get('http://127.0.0.1:8000/api/v1/users/' + this.tUser + '/like')
+            axios.get('https://rese-app.herokuapp.com/api/v1/users/' + this.tUser + '/like')
             .then((response) => {
               this.likes = response.data.data
             })
@@ -242,7 +242,7 @@ export default {
       this.likes.some(like => {
         let check = like.shop_id == id
         if(check) {
-          axios.delete('http://127.0.0.1:8000/api/v1/shops/' + like.id + '/like')
+          axios.delete('https://rese-app.herokuapp.com/api/v1/shops/' + like.id + '/like')
           alert('お気に入りは解除されました', sendLike)
           this.index = !this.isActive
           this.getShop()
@@ -252,7 +252,7 @@ export default {
         }
       })
       if(value == false) {
-        axios.post('http://127.0.0.1:8000/api/v1/shops/' + id + '/like', sendLike)
+        axios.post('https://rese-app.herokuapp.com/api/v1/shops/' + id + '/like', sendLike)
         alert('お気に入り登録しました')
         this.getShop()
       }
