@@ -54,25 +54,17 @@ export default {
           axios.post('https://rese-app.herokuapp.com/api/v1/owners/login', sendOwner)
           .then((response) => {
             const loginOwner = response.data.data
-            axios.get('http://127.0.0.1:8000/api/v1/shops')
+            axios.get('https://rese-app.herokuapp.com/api/v1/shops')
             .then((response) => {
               this.checkHasShops = response.data.data
-              // for(let i = 0; i < this.checkHasShops.length; i++) {
-              //   const selectPage = this.checkHasShops[i]
-              //   if(selectPage.owner_email == loginOwner) {
-              //     return this.$router.push('/owner')
-              //   }
-              //   return this.$router.push('/owner/shop/register')
-              // }
               let selectPage =
               this.checkHasShops.some((select) => {
-                if(select.email == loginOwner){
+                if(select.owner_id == loginOwner.id){
                   return this.$router.push('/owner')
                 } else {
                   return false
                 }
               })
-              console.log(selectPage)
               if(selectPage == false) {
                 return this.$router.push('/owner/shop/register')
               }

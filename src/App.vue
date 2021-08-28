@@ -195,7 +195,6 @@ body {
     transform: translate(-14px, 8px) rotate(45deg);
     transition: .4s;
     position: absolute;
-    background: blue;
   }
   .menuModal:nth-of-type(2) {
     display: none;
@@ -205,7 +204,6 @@ body {
     transform: translate(-14px, -8px) rotate(135deg);
     position: absolute;
     transition: .4s;
-    background: blue;
   }
 
 
@@ -247,7 +245,6 @@ body {
     width: 100vw;
     height: 100vh;
     background: rgba(0,0,0,0.8);
-    /* background: white; */
     z-index: 4;
     transition: .4s;
   }
