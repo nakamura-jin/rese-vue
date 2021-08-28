@@ -100,19 +100,19 @@
               <tr>
                 <th>エリア</th>
                 <td>
-                  <div v-if="this.shopArea == 1">東京</div>
-                  <div v-if="this.shopArea == 2">大阪</div>
-                  <div v-if="this.shopArea == 3">福岡</div>
+                  <div v-if="this.shopArea == 5">東京</div>
+                  <div v-if="this.shopArea == 15">大阪</div>
+                  <div v-if="this.shopArea == 25">福岡</div>
                 </td>
               </tr>
               <tr>
                 <th>ジャンル</th>
                 <td>
-                  <div v-if="this.shopGenre == 1">寿司</div>
-                  <div v-if="this.shopGenre == 2">焼肉</div>
-                  <div v-if="this.shopGenre == 3">居酒屋</div>
-                  <div v-if="this.shopGenre == 4">イタリアン</div>
-                  <div v-if="this.shopGenre == 5">ラーメン</div>
+                  <div v-if="this.shopGenre == 5">寿司</div>
+                  <div v-if="this.shopGenre == 15">焼肉</div>
+                  <div v-if="this.shopGenre == 25">居酒屋</div>
+                  <div v-if="this.shopGenre == 35">イタリアン</div>
+                  <div v-if="this.shopGenre == 45">ラーメン</div>
                 </td>
               </tr>
               <tr>
