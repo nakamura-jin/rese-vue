@@ -59,7 +59,7 @@ export default {
               this.checkHasShops = response.data.data
               for(let i = 0; i < this.checkHasShops.length; i++) {
                 const selectPage = this.checkHasShops[i]
-                if(selectPage.owner_id == loginOwner.id) {
+                if(selectPage.owner_email == loginOwner) {
                   return this.$router.push('/owner')
                 }
                 return this.$router.push('/owner/shop/register')
