@@ -198,7 +198,7 @@ export default {
               this.resetShop();
             })
             .catch(error => {
-              console.log(error.response)
+              console.log(error.response.data)
             })
           })
         });

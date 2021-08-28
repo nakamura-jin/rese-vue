@@ -504,16 +504,16 @@ export default {
     box-shadow: 4px 4px 4px rgba(0,0,0,0.4);
   }
   .select__area, .select__genre {
-    width: 23%;
+    width: 20%;
     height: 26px;
-    margin-left: 6px;
-    font-size: 16px;
+    margin-left: 2px;
+    font-size: 0.5em;
     border: none;
     font-size: 12px;
   }
 
   .search-bar {
-    width: 40%;
+    width: 38%;
     height: 20px;
     border: none;
     font-size: 12px;

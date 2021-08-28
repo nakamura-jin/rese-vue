@@ -1,6 +1,10 @@
 <template>
   <div id="app">
     <div id="logo">
+      <div class="click__home" @click="SiteHome">
+        <fa icon="poll-h" class="icon size"/>
+        <h1>Rese</h1>
+      </div>
       <div class="menu" @click="menu" >
         <span :class="{ menuModal: isToggle }"></span>
         <span :class="{ menuModal: isToggle }"></span>
@@ -33,11 +37,6 @@
         </div>
       </div>
       <!-- ここまで -->
-
-      <div class="click__home" @click="SiteHome">
-        <fa icon="poll-h" class="icon size"/>
-        <h1>Rese</h1>
-      </div>
     </div>
     <router-view/>
   </div>
@@ -116,6 +115,7 @@ body {
 }
 .click__home {
   display: flex;
+  justify-content: space-between;
 }
 #logo {
   display: flex;
@@ -151,11 +151,12 @@ body {
     margin: 0;
   }
   .click__home {
-    margin-left: 30%;
+    margin-left: 10px;
+    line-height: 40px;
   }
   .menu {
     width: 30px;
-    margin-left: 6px;
+    margin-right: 10px;
     height: 30px;
     position: relative;
     z-index: 5;
@@ -217,6 +218,8 @@ body {
     width: 100%;
     height: 40px;
     background: blue;
+    display: flex;
+    justify-content: space-between;
     margin: 0;
     position: fixed;
     top: 0;
@@ -246,6 +249,7 @@ body {
     background: rgba(0,0,0,0.8);
     /* background: white; */
     z-index: 4;
+    transition: .4s;
   }
   .menu-modal__container {
     position: absolute;
