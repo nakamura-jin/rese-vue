@@ -35,9 +35,9 @@
           <td>
             <validation-provider v-slot="{ errors }" rules="required">
               <select v-model="shopArea" class="shopRegister__shopArea" name="エリア">
-                <option value="1">東京</option>
-                <option value="2">大阪</option>
-                <option value="3">福岡</option>
+                <option value="5">東京</option>
+                <option value="15">大阪</option>
+                <option value="25">福岡</option>
               </select>
               <div class="shopRegister__error">{{ errors[0] }}</div>
             </validation-provider>
@@ -48,11 +48,11 @@
           <td>
             <validation-provider v-slot="{ errors }" rules="required">
               <select v-model="shopGenre" class="shopRegister__shopGenre" name="ジャンル">
-                <option value="1">寿司</option>
-                <option value="2">焼肉</option>
-                <option value="3">居酒屋</option>
-                <option value="4">イタリアン</option>
-                <option value="5">ラーメン</option>
+                <option value="5">寿司</option>
+                <option value="15">焼肉</option>
+                <option value="25">居酒屋</option>
+                <option value="35">イタリアン</option>
+                <option value="45">ラーメン</option>
               </select>
               <div class="shopRegister__error">{{ errors[0] }}</div>
             </validation-provider>
