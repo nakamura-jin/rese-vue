@@ -14,7 +14,7 @@ export default {
   name: 'OwnerThanks',
   methods: {
     go_to_owner_login() {
-      this.$router.push('/owner/login');
+      this.$router.push({name: 'OwnerLogin'});
     },
   },
 }

@@ -76,7 +76,7 @@ export default {
             }
             axios.post('https://rese-app.herokuapp.com/api/v1/users/login', sendUser)
             .then(() => {
-              this.$router.push('/top');
+              this.$router.push({name: 'ShopList'});
             })
           }
         })
@@ -101,7 +101,7 @@ export default {
         });
     },
     registerPage(){
-      this.$router.push('/register')
+      this.$router.push({name: 'Register'})
     },
     backLogin(){
       this.loginCard = true;

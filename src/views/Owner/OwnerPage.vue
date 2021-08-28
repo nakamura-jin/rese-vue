@@ -444,7 +444,7 @@ export default {
       .auth()
       .onAuthStateChanged(user => {
         if(!user) {
-          this.$router.push('/')
+          this.$router.push({name: 'SiteTop'})
         } else {
           this.owner_id = user.uid
           axios.get('https://rese-app.herokuapp.com/api/v1/owners/' + user.uid)
@@ -630,7 +630,7 @@ export default {
       .auth()
       .signOut()
       .then(() => {
-        this.$router.push('/owner/login')
+        this.$router.push({name: 'OwnerLogin'})
       })
     }
   },

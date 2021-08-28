@@ -93,7 +93,7 @@ export default {
         });
     },
     OwnerLoginPage() {
-      this.$router.push('/owner/login')
+      this.$router.push({name: 'OwnerLogin'})
     }
   }
 }

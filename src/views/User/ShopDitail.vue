@@ -248,7 +248,7 @@ export default {
   methods: {
     // 前のページに戻る
     back() {
-      this.$router.push('/top');
+      this.$router.push({name: 'ShopList'});
     },
 
     shopDotail() {
@@ -256,7 +256,7 @@ export default {
       .auth()
       .onAuthStateChanged((user) => {
         if(!user) {
-          this.$router.push('/')
+          this.$router.push({name: 'SiteTop'})
         } else {
           // ショップデータ取得
           axios.get('https://rese-app.herokuapp.com/api/v1/shops/' + this.shop_id)
@@ -306,7 +306,7 @@ export default {
             alert('日付は今日以降で設定してください')
           } else {
           axios.post('https://rese-app.herokuapp.com/api/v1/shops/' +this.shop_id + '/reservation', reservationData)
-          this.$router.push('/done')
+          this.$router.push({name: 'Done'})
           }
         }
       })

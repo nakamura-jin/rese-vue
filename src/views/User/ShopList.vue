@@ -176,7 +176,7 @@ export default {
       .auth()
       .onAuthStateChanged(user => {
         if(!user) {
-          this.$router.push('/')
+          this.$router.push({name: 'SiteTop'})
         } else {
           axios.get('https://rese-app.herokuapp.com/api/v1/shops')
           .then((response) => {
@@ -260,7 +260,7 @@ export default {
 
       // マイページへ遷移
     mypage() {
-      this.$router.push('/mypage')
+      this.$router.push({name: 'MyPage'})
     },
 
     // ログアウト
@@ -269,7 +269,7 @@ export default {
       .auth()
       .signOut()
       .then(() => {
-        this.$router.push('/login')
+        this.$router.push({name: 'Login'})
       })
     },
   },

@@ -66,7 +66,7 @@ export default {
       .auth()
       .signOut()
       .then(() => {
-        this.$router.push('/')
+        this.$router.push({name: 'SiteTop'})
       })
     },
     menu() {
@@ -76,12 +76,12 @@ export default {
     mypage() {
       this.isToggle = !this.isToggle
       this.isClose = !this.isClose
-      this.$router.push('/mypage')
+      this.$router.push({name: 'MyPage'})
     },
     top() {
       this.isToggle = !this.isToggle
       this.isClose = !this.isClose
-      this.$router.push('/')
+      this.$router.push({name: 'SiteTop'})
     },
     menubarLogout() {
       firebase
@@ -90,7 +90,7 @@ export default {
       .then(() => {
         this.isToggle = !this.isToggle
         this.isClose = !this.isClose
-        this.$router.push('/')
+        this.$router.push({name: 'SiteTop'})
       })
     }
   },

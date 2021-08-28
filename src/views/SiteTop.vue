@@ -13,7 +13,7 @@ export default {
   methods: {
     go(value) {
       if(value == 'user') {
-        this.$router.push('/login');
+        this.$router.push({name: 'Login'});
       } else {
         this.$router.push('owner/login')
       }

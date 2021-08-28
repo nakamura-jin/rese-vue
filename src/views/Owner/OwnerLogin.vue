@@ -60,13 +60,13 @@ export default {
               let selectPage =
               this.checkHasShops.some((select) => {
                 if(select.owner_id == loginOwner.id){
-                  return this.$router.push('/owner')
+                  return this.$router.push({name: 'OwnerPage'})
                 } else {
                   return false
                 }
               })
               if(selectPage == false) {
-                return this.$router.push('/owner/shop/register')
+                return this.$router.push({name: 'ShopRegister'})
               }
             })
           })
@@ -92,7 +92,7 @@ export default {
         });
     },
     OwnerRegisterPage() {
-      this.$router.push('/owner/register')
+      this.$router.push({name: 'OwnerRegister'})
     }
   }
 }

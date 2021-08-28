@@ -14,7 +14,7 @@ export default {
   name: 'DonePop',
   methods: {
     back() {
-      this.$router.push('/mypage')
+      this.$router.push({name: 'MyPage'})
     }
   }
 }

@@ -15,7 +15,7 @@ export default {
   name: 'ThanksPop',
   methods: {
     go_to_login() {
-      this.$router.push('/login');
+      this.$router.push({name: 'Login'});
     },
   }
 }

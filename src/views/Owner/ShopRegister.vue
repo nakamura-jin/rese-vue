@@ -227,7 +227,7 @@ export default {
       this.shopCreate = true
     },
     ownerPage() {
-      this.$router.push('/owner')
+      this.$router.push({name: 'OwnerPage'})
     }
   }
 }

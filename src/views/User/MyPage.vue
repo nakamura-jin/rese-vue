@@ -68,7 +68,7 @@ export default {
     .auth()
     .onAuthStateChanged(user => {
       if(!user) {
-        this.$router.push('/')
+        this.$router.push({name: 'SiteTop'})
       } else {
         axios.get('https://rese-app.herokuapp.com/api/v1/users/' + user.uid)
         .then((response) => {
