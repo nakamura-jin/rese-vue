@@ -66,7 +66,7 @@ export default {
               }
               let selectPage =
               this.checkHasShops.some((select) => {
-                if(select.owner_id == loginOwner.id){
+                if(select.email == loginOwner){
                   return this.$router.push('/owner')
                 } else {
                   return false
