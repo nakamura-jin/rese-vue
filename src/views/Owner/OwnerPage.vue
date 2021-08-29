@@ -413,7 +413,7 @@ export default {
       updateReservationDate: '',
       updateReservationTime: '',
       updateReservationPeople: '',
-      reservationBeforeData: true,
+      reservationBeforeData: false,
       isUpdatedReservation: true,
       openDate: true,
       openTime: true,

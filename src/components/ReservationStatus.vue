@@ -651,6 +651,7 @@ export default {
   }
   .status {
     width: 82%;
+    margin: 0 auto;
   }
   .reservation__edit,
   .delete {
@@ -665,11 +666,11 @@ export default {
     padding-left: 10px;
     list-style: none;
   }
-  /* .sp-mode__status__title__list li {
-    width: 25%;
-  } */
+  .sp-mode__status__title__list p {
+    width: 100%;
+  }
+
   .sp-mode__status__title__list li:nth-of-type(1){
-    /* width: 10%; */
     margin: 0;
   }
   .sp-mode__status__title__list li:nth-of-type(2) {
@@ -741,7 +742,16 @@ export default {
     font-weight: bold;
   }
 
-  
+  .user-reservation__input-date {
+    width: 100%;
+    border: none;
+    margin: 60px auto 100px;
+    font-size: 20px;
+  }
+
+  .user-reservation__edit__inner {
+    width: 80%;
+  }
 }
 
 </style>
