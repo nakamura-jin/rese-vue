@@ -1,28 +1,119 @@
 <<<<<<< HEAD
 # rese
+プログラミングスクールの課題で作成した飲食店予約アプリです。
 
-## Project setup
-```
-yarn install
-```
+フロントエンドをvue.js、バックエンドをlaravelで作成し、PCとスマートフォンどちらにも対応させております。
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
 
-### Compiles and minifies for production
-```
-yarn build
-```
 
-### Lints and fixes files
-```
-yarn lint
-```
+**laravel GitHub**
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
-=======
-# rese-vue
+https://github.com/nakamura-jin/rese-laravel
+
+
+**アプリケーションURL**
+
+https://keen-bartik-c5dc5d.netlify.app
+
+
+***
+# 機能一覧
+* ユーザー
+  * 会員登録
+  * ログイン・ログアウト
+  * お気に入り登録・削除
+  * 店舗予約・変更・キャンセル
+  * 店舗評価
+  * 店舗の検索（エリア・ジャンル・店舗名）
+
+* オーナー
+  * 会員登録
+  * ログイン・ログアウト
+  * 店舗登録
+  * 店舗画像登録
+  * 当日の来店予約確認・変更・キャンセル
+
+***
+
+# サイト画面
+
+**PC版**
+
+
+![スクリーンショット 2021-08-31 10 43 16](https://user-images.githubusercontent.com/79826333/131428272-9a7da994-098d-4ebe-87a8-c17bc04fb603.png)
+
+
+**スマートフォン版**
+
+![スクリーンショット 2021-08-31 10 49 09](https://user-images.githubusercontent.com/79826333/131428545-1b1bd5c3-ea90-496a-9b4a-1454623934d3.png)
+
+ユーザーは「お客様様」、オーナーは「店舗様様」をクリックし進めていきます。
+
+※下記よりPC版の画面になっております。
+
+
+***
+# ログインページ
+
+
+![スクリーンショット 2021-08-31 10 53 19](https://user-images.githubusercontent.com/79826333/131428867-b45b914c-8de6-4aa2-807b-8e7f4f2452d9.png)
+
+
+メールアドレスとパスワードでログイン。まだ会員登録がされていない場合は下記にある「会員登録はこちら」をクリックし会員登録を行う。
+
+※ユーザー側とオーナー側で表示、機能が変わるため登録時注意が必要。
+
+***
+# ログイン後トップページ
+
+![スクリーンショット 2021-08-31 11 06 05](https://user-images.githubusercontent.com/79826333/131430092-5506d78c-742b-4e26-a4e6-c2e48d9436b4.png)
+
+
+ログイン後のトップページには、登録されている店舗一覧が表示されます。
+
+* ハートマークをクリックすることで、お気に入り登録の登録・削除を行うことができます。
+
+* 星のマークは評価値、総評価登録数、自分も評価した場合には（評価済み）が表示される様になっています。
+
+* 検索バーでは、エリア、ジャンル、店舗名で検索できます。
+
+***
+# 店舗詳細ページ
+
+![スクリーンショット 2021-08-31 11 13 55](https://user-images.githubusercontent.com/79826333/131430632-0ff0e9d6-4ac8-4fe8-b59b-9ce2dfaa12d1.png)
+
+こちらのページでは選択した店舗の詳細の確認、店舗の評価、店舗の来店予約が行える様になっています。
+
+***
+# マイページ
+
+![スクリーンショット 2021-08-31 11 17 39](https://user-images.githubusercontent.com/79826333/131430975-8adde97e-60e7-4527-a5bc-937fe998d1f7.png)
+
+![スクリーンショット 2021-08-31 11 23 14](https://user-images.githubusercontent.com/79826333/131431435-e94bb7c9-6da2-4ec2-a930-c0fe5064d60a.png)
+
+こちらのページには、来店の予約情報やお気に入り登録した店舗の一覧が表示される様になってます。
+予約の変更やキャンセルもこちらから行います
+
+***
+# オーナーページ
+
+
+![スクリーンショット 2021-08-31 11 30 57](https://user-images.githubusercontent.com/79826333/131434033-b1e4fdb5-626e-4e49-92e6-411e1336e91d.png)
+
+
+![スクリーンショット 2021-08-31 11 52 53](https://user-images.githubusercontent.com/79826333/131434140-6c44d9ee-0b8e-4656-9d6b-77cfe3a97778.png)
+
+オーナーは会員登録後、初めに店舗の登録を行います。
+
+店舗登録を行っていない場合は利用ができないため、登録するまでは必ず店舗登録画面に遷移します。
+
+***
+# オーナーページ
+
+
+![スクリーンショット 2021-08-31 12 05 04](https://user-images.githubusercontent.com/79826333/131435079-6bbe6925-3790-4a29-b03a-daa008fa715b.png)
+
+オーナーページでは、当日の予約を確認することが可能です。
+
+さらに、オーナーページからも予約の変更やキャンセルを行うこともできます。
 >>>>>>> origin/master

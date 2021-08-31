@@ -314,8 +314,8 @@ export default {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 80%;
-  height: 70%;
+  width: 40%;
+  height: 60%;
   background: white;
   border-radius: 4px;
   border: 4px solid skyblue;
@@ -326,13 +326,14 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
   width: 100%;
-  /* height: 100%; */
 }
 .confirm__shop {
   padding: 0 30px;
+  margin: 0 auto;
 }
-.confirm__shop th {
-  width: 10%;
+.confirm__shop th,
+.confirm__shop td {
+  width: 60%;
 }
 .confirm-image {
   width: 100px;
