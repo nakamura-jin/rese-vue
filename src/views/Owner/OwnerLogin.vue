@@ -94,7 +94,7 @@ export default {
     OwnerRegisterPage() {
       this.$router.push({name: 'OwnerRegister'})
     }
-  }
+  },
 }
 </script>
 

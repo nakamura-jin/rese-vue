@@ -1,5 +1,6 @@
 <template>
   <div class="shop-list">
+    <Loading v-show="loading"></Loading>
     <div class="search-component">
       <!-- 検索 -->
       <div class="search">
@@ -150,8 +151,12 @@
 <script>
 import axios from 'axios'
 import firebase from 'firebase'
+import Loading from '@/components/Loading'
 
 export default {
+  components: {
+    Loading
+  },
   data() {
     return {
       shops: [],
@@ -166,7 +171,7 @@ export default {
       word: '',
 
       shopStar: [],
-
+      loading: true,
     }
   },
   methods: {
@@ -273,7 +278,11 @@ export default {
       })
     },
   },
-
+  mounted() {
+    setTimeout(() => {
+      this.loading = false;
+    }, 5000);
+  },
   computed: {
     // お店検索
     filteredShops() {

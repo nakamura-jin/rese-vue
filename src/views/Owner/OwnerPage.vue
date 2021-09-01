@@ -1,5 +1,6 @@
 <template>
   <div class="owner__page">
+    <Loading v-show="loading"></Loading>
     <div class="owner__page-header">
       <h1 class="owner__shop-name">{{ ownerShop.shopname }}</h1>
       <button class="pc-mode__owner__shop-logout" @click="ownerLogout">ログアウト</button>
@@ -391,9 +392,13 @@
 <script>
 import axios from 'axios'
 import firebase from 'firebase'
+import Loading from '@/components/Loading'
 
 export default {
   name: 'OwnerPage',
+  components: {
+    Loading,
+  },
   data() {
     return {
       ownerShop: [],
@@ -426,7 +431,9 @@ export default {
 
       // sp版
       todayReservation: true,
-      shopInfo: false
+      shopInfo: false,
+
+      loading: true,
     }
   },
   methods: {
@@ -634,6 +641,13 @@ export default {
       })
     }
   },
+
+  mounted() {
+    setTimeout(() => {
+      this.loading = false;
+    }, 1000);
+  },
+
   created() {
     this.getOwnerShop();
   }

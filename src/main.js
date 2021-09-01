@@ -12,7 +12,10 @@ import StarRating from 'vue-star-rating'
 import { ValidationProvider, ValidationObserver, extend, localize } from 'vee-validate';
 import * as originalRules from 'vee-validate/dist/rules';
 import ja from 'vee-validate/dist/locale/ja.json';
+import VueLoading from 'vue-loading-template'
 
+// loading
+Vue.use(VueLoading, /** options **/)
 
 
 // axios
